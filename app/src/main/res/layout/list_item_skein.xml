@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp">
+    <TextView
+        android:id="@+id/skein_list_number"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="B1702" />
+
+    <TextView
+        android:id="@+id/skein_list_dash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" - "
+        app:layout_constraintStart_toEndOf="@+id/skein_list_number"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/skein_list_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/skein_list_dash"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="dark green" />
+
+    <Button
+        android:id="@+id/skein_list_colour"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="48dp"
+        app:layout_constraintStart_toEndOf="@+id/skein_list_name"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/owned_yes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/in_use_question"
+        app:layout_constraintTop_toBottomOf="@+id/skein_list_name"
+        app:srcCompat="@drawable/ic_outline_check_box_24" />
+
+    <ImageView
+        android:id="@+id/owned_no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/in_use_question"
+        app:layout_constraintTop_toBottomOf="@+id/skein_list_name"
+        app:srcCompat="@drawable/ic_baseline_check_box_outline_blank_24" />
+
+    <TextView
+        android:id="@+id/amount_owned_list"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="4dp"
+        android:text="Amount owned: "
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/skein_list_dash" />
+
+
+    <TextView
+        android:id="@+id/in_use_question"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="4dp"
+        android:text="In use:"
+        app:layout_constraintStart_toEndOf="@+id/amount_owned_list"
+        app:layout_constraintTop_toBottomOf="@+id/skein_list_name" />
+
+    <TextView
+        android:id="@+id/skein_amount_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="4dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/amount_owned_list"
+        app:layout_constraintTop_toBottomOf="@+id/skein_list_name"
+        tools:text="5" />
+
+    <ImageView
+        android:id="@+id/shopping_cart"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toEndOf="@+id/owned_yes"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_sharp_shopping_cart_24" />
+
+    <ImageView
+        android:id="@+id/thread_options"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_sharp_more_vert_24" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
