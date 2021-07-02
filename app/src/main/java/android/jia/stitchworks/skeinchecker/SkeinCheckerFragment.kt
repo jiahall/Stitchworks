@@ -23,13 +23,14 @@ class SkeinCheckerFragment : Fragment() {
         R.layout.fragment_skein_checker, container, false)
 
         val application = requireNotNull(this.activity).application
-        //val dataSource = SkeinDatabase.getInstance(application).skeinDatabaseDao
 
-        //val viewModelFactory = SkeinCheckerViewModelFactory(dataSource, application)
+
+        val dataSource = SkeinDatabase.getInstance(application).skeinDatabaseDao
+        val viewModelFactory = SkeinCheckerViewModelFactory(dataSource, application)
 
 
         val skeinCheckerViewModel =
-            ViewModelProvider(this, defaultViewModelProviderFactory)
+            ViewModelProvider(this, viewModelFactory)
                 .get(SkeinCheckerViewModel::class.java)
 
         binding.skeinCheckerViewModel = skeinCheckerViewModel
