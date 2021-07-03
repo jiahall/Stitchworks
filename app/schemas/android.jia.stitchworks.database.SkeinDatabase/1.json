@@ -1,0 +1,76 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "3d3d813d8591a7260d7471dc52eb5055",
+    "entities": [
+      {
+        "tableName": "skein_checklist",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`brandNo` TEXT NOT NULL, `skein_number` TEXT NOT NULL, `thread_name` TEXT NOT NULL, `family_number` TEXT NOT NULL, `colour` TEXT NOT NULL, `amount` INTEGER NOT NULL, `in_use` TEXT NOT NULL, `shopping_list` TEXT NOT NULL, PRIMARY KEY(`brandNo`))",
+        "fields": [
+          {
+            "fieldPath": "brandNo",
+            "columnName": "brandNo",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "skeinNo",
+            "columnName": "skein_number",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "threadName",
+            "columnName": "thread_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "familyNumber",
+            "columnName": "family_number",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "colour",
+            "columnName": "colour",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "amountOfSkeins",
+            "columnName": "amount",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "inUse",
+            "columnName": "in_use",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "shoppingList",
+            "columnName": "shopping_list",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "brandNo"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3d3d813d8591a7260d7471dc52eb5055')"
+    ]
+  }
+}

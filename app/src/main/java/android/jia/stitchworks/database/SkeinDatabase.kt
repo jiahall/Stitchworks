@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [Skein::class], version = 1, exportSchema = false)
+@Database(entities = [Skein::class], version = 1, exportSchema = true)
 abstract class SkeinDatabase: RoomDatabase() {
 
     abstract val skeinDatabaseDao: SkeinDatabaseDao
