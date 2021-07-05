@@ -10,24 +10,23 @@ data class Skein(
     val brandNo: String,
 
     @ColumnInfo(name= "skein_number")
-    val skeinNo: String,
+    val skeinNo: String
 
-    @ColumnInfo(name = "thread_name")
-    val threadName: String,
+    /*   @ColumnInfo(name = "thread_name")
+      val threadName: String
+      @ColumnInfo(name = "family_number")
+      val familyNumber: String,
 
-    @ColumnInfo(name = "family_number")
-    val familyNumber: String,
+      @ColumnInfo(name = "colour")
+      val colour: String,
 
-    @ColumnInfo(name = "colour")
-    val colour: String,
+      @ColumnInfo(name="amount")
+      var amountOfSkeins: Int,
 
-    @ColumnInfo(name="amount")
-    var amountOfSkeins: Int,
+      @ColumnInfo(name="in_use")
+      var inUse: String,
 
-    @ColumnInfo(name="in_use")
-    var inUse: String,
+      @ColumnInfo(name = "shopping_list")
+      var shoppingList: String*/
 
-    @ColumnInfo(name = "shopping_list")
-    var shoppingList: String
-
-)
+  )

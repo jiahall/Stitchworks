@@ -7,9 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.jia.stitchworks.R
+import android.jia.stitchworks.database.Skein
 import android.jia.stitchworks.database.SkeinDatabase
 import android.jia.stitchworks.databinding.FragmentSkeinCheckerBinding
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
+import com.google.android.material.snackbar.Snackbar
 
 class SkeinCheckerFragment : Fragment() {
 
@@ -37,8 +41,16 @@ class SkeinCheckerFragment : Fragment() {
 
         binding.lifecycleOwner = this
 
+        val adapter = SkeinAdapter()
+        binding.skeinList.adapter = adapter
+
+        skeinCheckerViewModel.threads.observe(viewLifecycleOwner, Observer { it?.let{adapter.data = it} })
+
+
+
         return binding.root
     }
+
 
 
 }

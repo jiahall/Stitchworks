@@ -1,9 +1,12 @@
 package android.jia.stitchworks.database
 
 import android.content.Context
+import android.content.res.Resources
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
+import kotlinx.coroutines.CoroutineScope
 
 @Database(entities = [Skein::class], version = 1, exportSchema = true)
 abstract class SkeinDatabase: RoomDatabase() {
@@ -24,14 +27,18 @@ abstract class SkeinDatabase: RoomDatabase() {
                         context.applicationContext,
                         SkeinDatabase::class.java,
                         "skein_history_database"
-                    )//JIA GOTTA CHECK WHY YOU NEED THE HISTORY DATABASE
-                        .fallbackToDestructiveMigration()
-                        .build()
+                    ).build()
                     INSTANCE = instance
                 }
                 return instance
             }
+
         }
+
+
 
     }
 }
+
+
+
