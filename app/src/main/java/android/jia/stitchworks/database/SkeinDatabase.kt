@@ -27,7 +27,8 @@ abstract class SkeinDatabase: RoomDatabase() {
                         context.applicationContext,
                         SkeinDatabase::class.java,
                         "skein_history_database"
-                    ).build()
+                    ).fallbackToDestructiveMigration()
+                        .build()
                     INSTANCE = instance
                 }
                 return instance

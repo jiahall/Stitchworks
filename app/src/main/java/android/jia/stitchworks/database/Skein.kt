@@ -7,26 +7,30 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "skein_checklist")
 data class Skein(
     @PrimaryKey(autoGenerate = false)
-    val brandNo: String,
+    //we have the brand and the number for it to be unique
+    val brandNumber: String,
+
 
     @ColumnInfo(name= "skein_number")
-    val skeinNo: String
+    val skeinNumber: String,
+    //we have the number on it's own for search purposes will not be in the list item
 
-    /*   @ColumnInfo(name = "thread_name")
-      val threadName: String
+       @ColumnInfo(name = "thread_name")
+      val threadName: String,
+
       @ColumnInfo(name = "family_number")
       val familyNumber: String,
 
-      @ColumnInfo(name = "colour")
-      val colour: String,
+      @ColumnInfo(name = "colour_value")
+      val colourValue: String,
 
       @ColumnInfo(name="amount")
       var amountOfSkeins: Int,
 
       @ColumnInfo(name="in_use")
-      var inUse: String,
+      var inUse: Boolean= false,
 
-      @ColumnInfo(name = "shopping_list")
-      var shoppingList: String*/
+      @ColumnInfo(name = "shopping_cart")
+      var inShoppingCart: Boolean= false
 
   )

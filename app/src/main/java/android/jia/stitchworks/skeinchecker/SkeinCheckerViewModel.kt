@@ -25,27 +25,22 @@ application: Application) : ViewModel() {
     }
 
     init {
-        startData()
+        //startData()
     }
 
      private fun startData() {
         viewModelScope.launch {
+            insert(Skein("DMC-01","01","ClearBlue1","1","20", 0,true))
+            insert(Skein("DMC-02","02","DustyBlue5","5","20", 2, true))
+            insert(Skein("DMC-03","03","averageBlue8","8","20", 8, true))
+            insert(Skein("DMC-04","04","ClearRed2","2","20", 4, inShoppingCart = true))
+            insert(Skein("DMC-05","05","DustyRed6","6","20", 6, inShoppingCart = true))
+            insert(Skein("DMC-06","06","AverageRed9","9","20", 7, inShoppingCart = true))
+            insert(Skein("DMC-07","07","ClearGreen3","3","20", 0))
+            insert(Skein("DMC-08","08","AverageGreen10","10","20", 0))
+            insert(Skein("DMC-09","09","DustyGreen7","7","20", 0))
+            insert(Skein("DMC-10","10","ClearBlack4","4","20", 0))
 
-
-            /*insert(Skein("DMC-011", "011"))
-            insert(Skein("DMC-021", "021"))
-            insert(Skein("DMC-031", "031"))
-            insert(Skein("DMC-041", "041"))
-            insert(Skein("DMC-051", "051"))
-            insert(Skein("DMC-061", "061"))
-            insert(Skein("DMC-071", "071"))
-            insert(Skein("DMC-0151", "0115"))
-            insert(Skein("DMC-0251", "0215"))
-            insert(Skein("DMC-0351", "0315"))
-            insert(Skein("DMC-0451", "0415"))
-            insert(Skein("DMC-0551", "0515"))
-            insert(Skein("DMC-0651", "0615"))
-            insert(Skein("DMC-0751", "0715"))*/
         }
     }
 }
