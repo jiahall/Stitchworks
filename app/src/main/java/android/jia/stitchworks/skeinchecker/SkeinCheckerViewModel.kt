@@ -24,22 +24,27 @@ application: Application) : ViewModel() {
         database.delete(name)
     }
 
+    private suspend fun deleteAll(){
+        database.deleteAll()
+    }
+
     init {
         //startData()
     }
 
      private fun startData() {
         viewModelScope.launch {
-            insert(Skein("DMC-01","01","ClearBlue1","1","20", 0,true))
-            insert(Skein("DMC-02","02","DustyBlue5","5","20", 2, true))
-            insert(Skein("DMC-03","03","averageBlue8","8","20", 8, true))
-            insert(Skein("DMC-04","04","ClearRed2","2","20", 4, inShoppingCart = true))
-            insert(Skein("DMC-05","05","DustyRed6","6","20", 6, inShoppingCart = true))
-            insert(Skein("DMC-06","06","AverageRed9","9","20", 7, inShoppingCart = true))
-            insert(Skein("DMC-07","07","ClearGreen3","3","20", 0))
-            insert(Skein("DMC-08","08","AverageGreen10","10","20", 0))
-            insert(Skein("DMC-09","09","DustyGreen7","7","20", 0))
-            insert(Skein("DMC-10","10","ClearBlack4","4","20", 0))
+            deleteAll()
+            insert(Skein("DMC-01","01","LightBlue1","1","#03A9F4", 0,true))
+            insert(Skein("DMC-02","02","DarkBlue5","5","#023A6C", 2, true))
+            insert(Skein("DMC-03","03","averageBlue8","8","#1B7FAC", 8, true))
+            insert(Skein("DMC-04","04","LightRed2","2","#FF4D4D", 4, inShoppingCart = true))
+            insert(Skein("DMC-05","05","DarkRed6","6","#780000", 6, inShoppingCart = true))
+            insert(Skein("DMC-06","06","AverageRed9","9","#C80000", 7, inShoppingCart = true))
+            insert(Skein("DMC-07","07","LightGreen3","3","#58FF87", 0))
+            insert(Skein("DMC-08","08","AverageGreen10","10","#31B155", 0))
+            insert(Skein("DMC-09","09","DarkGreen7","7","#045C1D", 0))
+            insert(Skein("DMC-10","10","Black4","4","#FF000000", 0))
 
         }
     }

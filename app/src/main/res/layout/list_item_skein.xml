@@ -100,18 +100,19 @@
         app:layout_constraintTop_toBottomOf="@+id/skein_list_name"
         tools:text="5" />
 
-    <ImageView
-        android:id="@+id/in_shopping_cart"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:visibility="gone"
-        app:layout_constraintStart_toEndOf="@+id/skein_list_owned_yes"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_sharp_shopping_cart_24" />
+        <ImageView
+            android:id="@+id/in_shopping_cart"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
 
-    <ImageView
+            android:layout_marginEnd="36dp"
+
+            app:layout_constraintEnd_toStartOf="@+id/thread_options"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_sharp_shopping_cart_24" />
+
+        <ImageView
         android:id="@+id/thread_options"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

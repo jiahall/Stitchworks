@@ -18,6 +18,10 @@ interface SkeinDatabaseDao {
     @Query("DELETE FROM skein_checklist Where brandNumber = :key")
     suspend fun delete(key: String)
 
+    @Query("DELETE  FROM skein_checklist")
+    suspend fun deleteAll()
+
+
     //yeh we'll do this out as we can actually see shit
 
 }

@@ -1,10 +1,14 @@
 package android.jia.stitchworks.skeinchecker
 
+import android.graphics.Color
 import android.jia.stitchworks.R
 import android.jia.stitchworks.database.Skein
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isGone
@@ -13,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.room.ColumnInfo
 import androidx.room.PrimaryKey
 
-class SkeinAdapter: RecyclerView.Adapter<ViewHolder>() {
+class SkeinAdapter: RecyclerView.Adapter<ViewHolder>(), Filterable {
     var data = listOf<Skein>()
     set(value) {
         field = value
@@ -30,6 +34,10 @@ class SkeinAdapter: RecyclerView.Adapter<ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType:
     Int): ViewHolder {
         return ViewHolder.from(parent)
+    }
+
+    override fun getFilter(): Filter {
+        TODO("Not yet implemented")
     }
 
 
@@ -55,7 +63,7 @@ class ViewHolder private constructor(itemView: View) : RecyclerView.ViewHolder(i
 
         brandNumber.text =item.brandNumber
         threadName.text = item.threadName
-         //add colour value here
+         colourValue.setBackgroundColor(Color.parseColor(item.colourValue))
          amountOfSkeins.text = item.amountOfSkeins.toString()
          if (item.inUse== false){
              ownedYes.isGone = true
