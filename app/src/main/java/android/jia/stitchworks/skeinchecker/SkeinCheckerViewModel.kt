@@ -3,14 +3,11 @@ package android.jia.stitchworks.skeinchecker
 import android.app.Application
 import android.jia.stitchworks.database.Skein
 import android.jia.stitchworks.database.SkeinDatabaseDao
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import javax.sql.DataSource
 
-class SkeinCheckerViewModel(dataSource: SkeinDatabaseDao,
-application: Application) : ViewModel() {
+class SkeinCheckerViewModel(dataSource: SkeinDatabaseDao) : ViewModel() {
 
     val database = dataSource
 
@@ -47,5 +44,9 @@ application: Application) : ViewModel() {
             insert(Skein("DMC-10","10","Black4","4","#FF000000", 0))
 
         }
+    }
+
+    fun searchDatabase(searchQuery: String): LiveData<List<Skein>>{
+        return database.searchDatabase(searchQuery).asLiveData()
     }
 }

@@ -10,12 +10,17 @@ import android.jia.stitchworks.R
 import android.jia.stitchworks.database.Skein
 import android.jia.stitchworks.database.SkeinDatabase
 import android.jia.stitchworks.databinding.FragmentSkeinCheckerBinding
+import android.widget.SearchView
+
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 
 class SkeinCheckerFragment : Fragment() {
+
+
 
 
 
@@ -30,7 +35,7 @@ class SkeinCheckerFragment : Fragment() {
 
 
         val dataSource = SkeinDatabase.getInstance(application).skeinDatabaseDao
-        val viewModelFactory = SkeinCheckerViewModelFactory(dataSource, application)
+        val viewModelFactory = SkeinCheckerViewModelFactory(dataSource)
 
 
         val skeinCheckerViewModel =
@@ -46,6 +51,33 @@ class SkeinCheckerFragment : Fragment() {
 
         skeinCheckerViewModel.threads.observe(viewLifecycleOwner, Observer { it?.let{adapter.data = it} })
 
+        binding.searchView.queryHint= "hello type here"
+
+
+
+        binding.searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener,
+            SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(query: String?): Boolean {
+                if (query != null){
+                    val searchQuery = "%$query%"
+                    skeinCheckerViewModel.searchDatabase(searchQuery).observe(viewLifecycleOwner, { list ->
+                        list.let {
+                            adapter.data = it
+                        }
+                    })
+                }
+                return true
+            }
+
+        })
+
+
+
+
 
 
         return binding.root
@@ -53,4 +85,8 @@ class SkeinCheckerFragment : Fragment() {
 
 
 
+
+
 }
+
+

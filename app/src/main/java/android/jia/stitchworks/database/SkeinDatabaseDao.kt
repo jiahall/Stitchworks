@@ -2,6 +2,7 @@ package android.jia.stitchworks.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SkeinDatabaseDao {
@@ -20,6 +21,10 @@ interface SkeinDatabaseDao {
 
     @Query("DELETE  FROM skein_checklist")
     suspend fun deleteAll()
+
+    @Query("SELECT * FROM skein_checklist WHERE brandNumber LIKE :searchQuery")
+        fun searchDatabase(searchQuery: String): Flow<List<Skein>>
+
 
 
     //yeh we'll do this out as we can actually see shit

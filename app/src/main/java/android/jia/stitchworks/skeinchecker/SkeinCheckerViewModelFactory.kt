@@ -7,12 +7,12 @@ import androidx.lifecycle.ViewModelProvider
 import javax.sql.DataSource
 
 class SkeinCheckerViewModelFactory(
-    private val dataSource: SkeinDatabaseDao,
-    private val application: Application
+    private val dataSource: SkeinDatabaseDao
+
 ): ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(SkeinCheckerViewModel::class.java)) {
-            return SkeinCheckerViewModel(dataSource, application) as T
+            return SkeinCheckerViewModel(dataSource) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
