@@ -25,8 +25,13 @@ interface SkeinDatabaseDao {
     @Query("SELECT * FROM skein_checklist WHERE brandNumber LIKE :searchQuery")
         fun searchDatabase(searchQuery: String): Flow<List<Skein>>
 
+    @Query("SELECT * FROM skein_checklist WHERE shopping_cart = '1' AND brandNumber LIKE :searchQuery")
+    fun searchQueryShopping(searchQuery: String): Flow<List<Skein>>
+
+        @Query("SELECT * FROM skein_checklist WHERE shopping_cart = '1' ")
+        fun searchShopping(): LiveData<List<Skein>>
 
 
-    //yeh we'll do this out as we can actually see shit
+
 
 }

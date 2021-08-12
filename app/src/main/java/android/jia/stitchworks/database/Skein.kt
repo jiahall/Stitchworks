@@ -12,8 +12,8 @@ data class Skein(
 
 
     @ColumnInfo(name= "skein_number")
-    val skeinNumber: String,
-    //we have the number on it's own for search purposes will not be in the list item
+    val skeinNumber: Int,
+    
 
        @ColumnInfo(name = "thread_name")
       val threadName: String,
@@ -23,6 +23,7 @@ data class Skein(
 
       @ColumnInfo(name = "colour_value")
       val colourValue: String,
+    //gotta change that to hexColour
 
       @ColumnInfo(name="amount")
       var amountOfSkeins: Int,

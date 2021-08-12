@@ -50,6 +50,8 @@ class SkeinCheckerFragment : Fragment() {
         binding.skeinList.adapter = adapter
 
         skeinCheckerViewModel.threads.observe(viewLifecycleOwner, Observer { it?.let{adapter.data = it} })
+        //have a whencase in the viewmodel for this e.g "threads will be one of the filters not just get all"
+        //
 
         binding.searchView.queryHint= "hello type here"
 
@@ -63,6 +65,7 @@ class SkeinCheckerFragment : Fragment() {
 
             override fun onQueryTextChange(query: String?): Boolean {
                 if (query != null){
+                    //I GUESS YOUD ADD AN OBSERVER HERE TOO OR MAYBE TURN THE OBSERVER INTO A WHEN CASE
                     val searchQuery = "%$query%"
                     skeinCheckerViewModel.searchDatabase(searchQuery).observe(viewLifecycleOwner, { list ->
                         list.let {
