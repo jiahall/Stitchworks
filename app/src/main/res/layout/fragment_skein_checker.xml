@@ -32,7 +32,7 @@
                 app:iconifiedByDefault="false"
                 />
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/search_filter"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

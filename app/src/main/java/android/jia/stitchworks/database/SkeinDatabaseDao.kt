@@ -1,6 +1,7 @@
 package android.jia.stitchworks.database
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
@@ -15,6 +16,10 @@ interface SkeinDatabaseDao {
 
      @Query("SELECT * FROM skein_checklist WHERE brandNumber = :key")
     suspend fun get(key: String): Skein
+
+
+    @Query("SELECT * FROM skein_checklist WHERE brandNumber = 'DMC-726' ")
+     fun getInUse(): LiveData<List<Skein>>
 
     @Query("SELECT * FROM skein_checklist ORDER BY skein_number ASC")
    fun getAllThreads(): LiveData<List<Skein>>

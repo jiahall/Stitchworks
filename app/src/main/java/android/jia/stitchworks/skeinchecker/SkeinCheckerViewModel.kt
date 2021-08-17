@@ -12,7 +12,8 @@ class SkeinCheckerViewModel(dataSource: SkeinDatabaseDao) : ViewModel() {
     val database = dataSource
 
      var threads = database.getAllThreads()
-    var shoppingList = database.searchShopping()
+    var shoppingList = database.getInUse()
+
 
     private suspend fun insert(skein: Skein){
         database.insert(skein)
@@ -27,6 +28,7 @@ class SkeinCheckerViewModel(dataSource: SkeinDatabaseDao) : ViewModel() {
     }
 
     init {
+
        //startData()
     }
 
@@ -47,7 +49,8 @@ class SkeinCheckerViewModel(dataSource: SkeinDatabaseDao) : ViewModel() {
         }
     }
 
-    fun searchDatabase(searchQuery: String): LiveData<List<Skein>> {
+    fun searchDatabase(query: String): LiveData<List<Skein>> {
+        val searchQuery = "%$query%"
         return database.searchDatabase(searchQuery).asLiveData()
     }
 
@@ -57,4 +60,15 @@ class SkeinCheckerViewModel(dataSource: SkeinDatabaseDao) : ViewModel() {
     fun searchQueryDatabase(searchQuery: String): LiveData<List<Skein>>{
         return database.searchQueryShopping(searchQuery).asLiveData()
     }
+
+    fun updateInUse() {
+        threads = database.getInUse()
+
+    }
+
+    fun updateGetAll() {
+        threads = database.getAllThreads()
+    }
+
+
 }
