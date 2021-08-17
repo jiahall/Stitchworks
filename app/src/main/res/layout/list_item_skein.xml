@@ -41,16 +41,15 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="dark green" />
 
-    <ImageView
-        android:id="@+id/skein_list_colour_value"
-        app:srcCompat="@drawable/ic_baseline_colour_box_outline_blank_24"
-        android:layout_width="0dp"
-        android:layout_height="25dp"
-        android:background="#FF018786"
-        app:tint="#FF018786"
-        android:layout_marginStart="48dp"
-        app:layout_constraintStart_toEndOf="@+id/skein_list_name"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/skein_list_colour_value"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:background="#FF018786"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_colour_box_outline_blank_24"
+            app:tint="#FF018786" />
 
     <ImageView
         android:id="@+id/skein_list_owned_yes"

@@ -4,25 +4,20 @@ import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.jia.stitchworks.R
-import android.jia.stitchworks.database.Skein
 import android.jia.stitchworks.database.SkeinDatabase
 import android.jia.stitchworks.databinding.FragmentSkeinCheckerBinding
-import android.util.Log
 import android.view.*
 import android.widget.PopupMenu
 import android.widget.SearchView
 
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import com.google.android.material.snackbar.Snackbar
 
 class SkeinCheckerFragment : Fragment() {
 
 
 
-private lateinit var binding: FragmentSkeinCheckerBinding
+//these are here so i can talk to adapter/vm outside of onCreate
 private lateinit var skeinCheckerViewModel: SkeinCheckerViewModel
 private lateinit var adapter: SkeinAdapter
 
@@ -67,6 +62,7 @@ private lateinit var adapter: SkeinAdapter
                 return true
             }
 
+            //you gotta change this to filter the threads observable
             override fun onQueryTextChange(query: String?): Boolean {
                 if (query != null){//add and for null case
                     //I GUESS YOUD ADD AN OBSERVER HERE TOO OR MAYBE TURN THE OBSERVER INTO A WHEN CASE
@@ -98,24 +94,34 @@ private lateinit var adapter: SkeinAdapter
         popupMenu.show()
 
         popupMenu.setOnMenuItemClickListener {
-            when (it.itemId){
-                R.id.show_in_use -> {skeinCheckerViewModel.updateInUse()
-                    skeinCheckerViewModel.threads.observe(viewLifecycleOwner, Observer { it?.let { adapter.data=it } })
-                }
-                R.id.show_all -> {skeinCheckerViewModel.updateGetAll()
-                    skeinCheckerViewModel.threads.observe(viewLifecycleOwner, Observer { it?.let { adapter.data=it } })}
 
+
+            //we gotta figure this out
+            when (it.itemId) {
+                R.id.show_owned -> {
+                    skeinCheckerViewModel.getOwned()
+                    skeinCheckerViewModel.threads.observe(
+                        viewLifecycleOwner,
+                        Observer { it?.let { adapter.data = it } })
+
+
+                }
+                R.id.show_all -> {
+                    skeinCheckerViewModel.updateGetAll()
+                    skeinCheckerViewModel.threads.observe(
+                        viewLifecycleOwner,
+                        Observer { it?.let { adapter.data = it } })
+                }
+
+                R.id.show_unowned -> {
+                    skeinCheckerViewModel.getUnowned()
+                    skeinCheckerViewModel.threads.observe(
+                        viewLifecycleOwner,
+                        Observer { it?.let { adapter.data = it } })
+                }
             }
             true
         }
 
-
-
     }
-
-
 }
-
-
-//R.id.show_in_use -> {skeinCheckerViewModel.shoppingList.observe(viewLifecycleOwner, Observer { it?.let{adapter.data = it} })}
-//R.id.show_all -> {skeinCheckerViewModel.threads.observe(viewLifecycleOwner, Observer { it?.let { adapter.data=it } })}

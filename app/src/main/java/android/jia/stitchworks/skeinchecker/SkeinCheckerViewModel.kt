@@ -12,7 +12,7 @@ class SkeinCheckerViewModel(dataSource: SkeinDatabaseDao) : ViewModel() {
     val database = dataSource
 
      var threads = database.getAllThreads()
-    var shoppingList = database.getInUse()
+
 
 
     private suspend fun insert(skein: Skein){
@@ -61,13 +61,18 @@ class SkeinCheckerViewModel(dataSource: SkeinDatabaseDao) : ViewModel() {
         return database.searchQueryShopping(searchQuery).asLiveData()
     }
 
-    fun updateInUse() {
-        threads = database.getInUse()
+    fun getOwned() {
+        threads = database.getOwned()
+
 
     }
 
     fun updateGetAll() {
         threads = database.getAllThreads()
+    }
+
+    fun getUnowned() {
+        threads = database.getUnowned()
     }
 
 
