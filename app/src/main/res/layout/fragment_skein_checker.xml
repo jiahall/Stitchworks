@@ -33,6 +33,7 @@
                 />
 
             <ImageView
+                android:id="@+id/search_filter"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1"

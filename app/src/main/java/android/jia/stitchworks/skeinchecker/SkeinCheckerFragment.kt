@@ -3,13 +3,12 @@ package android.jia.stitchworks.skeinchecker
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.jia.stitchworks.R
 import android.jia.stitchworks.database.Skein
 import android.jia.stitchworks.database.SkeinDatabase
 import android.jia.stitchworks.databinding.FragmentSkeinCheckerBinding
+import android.util.Log
+import android.view.*
 import android.widget.SearchView
 
 import androidx.databinding.DataBindingUtil
@@ -44,6 +43,7 @@ class SkeinCheckerFragment : Fragment() {
 
         binding.skeinCheckerViewModel = skeinCheckerViewModel
 
+        // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
         binding.lifecycleOwner = this
 
         val adapter = SkeinAdapter()
@@ -53,7 +53,7 @@ class SkeinCheckerFragment : Fragment() {
         //have a whencase in the viewmodel for this e.g "threads will be one of the filters not just get all"
         //
 
-        binding.searchView.queryHint= "hello type here"
+        binding.searchView.queryHint= "hello, type here"
 
 
 
@@ -64,7 +64,7 @@ class SkeinCheckerFragment : Fragment() {
             }
 
             override fun onQueryTextChange(query: String?): Boolean {
-                if (query != null){
+                if (query != ""){//add and for null case
                     //I GUESS YOUD ADD AN OBSERVER HERE TOO OR MAYBE TURN THE OBSERVER INTO A WHEN CASE
                     val searchQuery = "%$query%"
                     skeinCheckerViewModel.searchDatabase(searchQuery).observe(viewLifecycleOwner, { list ->
@@ -72,6 +72,8 @@ class SkeinCheckerFragment : Fragment() {
                             adapter.data = it
                         }
                     })
+                }else if(query == ""){
+                    skeinCheckerViewModel.threads.observe(viewLifecycleOwner, Observer { it?.let{adapter.data = it} })
                 }
                 return true
             }
@@ -79,12 +81,9 @@ class SkeinCheckerFragment : Fragment() {
         })
 
 
-
-
-
-
         return binding.root
     }
+
 
 
 

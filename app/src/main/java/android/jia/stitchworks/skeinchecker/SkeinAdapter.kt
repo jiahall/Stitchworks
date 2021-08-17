@@ -63,9 +63,14 @@ class ViewHolder private constructor(itemView: View) : RecyclerView.ViewHolder(i
 
         brandNumber.text =item.brandNumber
         threadName.text = item.threadName
-         colourValue.setBackgroundColor(Color.parseColor(item.colourValue))
+         try {
+             colourValue.setBackgroundColor(Color.parseColor(item.colourValue))
+         }catch (e:IllegalArgumentException){
+             Log.i("SkeinAdapter", "hi jia it was ${brandNumber.text}")
+
+         }
          amountOfSkeins.text = item.amountOfSkeins.toString()
-         if (item.inUse== false){
+         if (!item.inUse){
              ownedYes.isGone = true
          }
          if (item.inShoppingCart){

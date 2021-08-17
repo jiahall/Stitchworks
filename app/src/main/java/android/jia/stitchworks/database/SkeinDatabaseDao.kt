@@ -10,10 +10,13 @@ interface SkeinDatabaseDao {
     @Insert
      suspend fun insert(skein: Skein)
 
+     @Insert
+    suspend fun insertAll(skein: List<Skein>)
+
      @Query("SELECT * FROM skein_checklist WHERE brandNumber = :key")
     suspend fun get(key: String): Skein
 
-    @Query("SELECT * FROM skein_checklist")
+    @Query("SELECT * FROM skein_checklist ORDER BY skein_number ASC")
    fun getAllThreads(): LiveData<List<Skein>>
 
     @Query("DELETE FROM skein_checklist Where brandNumber = :key")
@@ -30,6 +33,8 @@ interface SkeinDatabaseDao {
 
         @Query("SELECT * FROM skein_checklist WHERE shopping_cart = '1' ")
         fun searchShopping(): LiveData<List<Skein>>
+
+
 
 
 

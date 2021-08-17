@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/show_all"
+        android:title="Show all" />
+    <item
+        android:id="@+id/show_owned"
+        android:title="Show owned" />
+    <item
+        android:id="@+id/show_unowned"
+        android:title="Show unowned" />
+    <item
+        android:id="@+id/show_in_use"
+        android:title="Show in use" />
+    <item
+        android:id="@+id/show_shopping_cart"
+        android:title="Show shopping cart" />
+</menu>
