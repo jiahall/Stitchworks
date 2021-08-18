@@ -19,13 +19,13 @@ interface SkeinDatabaseDao {
 
 
     @Query("SELECT * FROM skein_checklist WHERE amount >= 1 ORDER BY skein_number ASC")
-     fun getOwned(): LiveData<List<Skein>>
+    suspend fun getOwned(): List<Skein>
 
     @Query("SELECT * FROM skein_checklist ORDER BY skein_number ASC")
-   fun getAllThreads(): LiveData<List<Skein>>
+   suspend fun getAllThreads(): List<Skein>
 
    @Query("SELECT * FROM skein_checklist WHERE amount = 0 ORDER BY skein_number ASC")
-           fun getUnowned(): LiveData<List<Skein>>
+    suspend fun getUnowned(): List<Skein>
 
     @Query("DELETE FROM skein_checklist Where brandNumber = :key")
     suspend fun delete(key: String)
@@ -39,8 +39,7 @@ interface SkeinDatabaseDao {
     @Query("SELECT * FROM skein_checklist WHERE shopping_cart = '1' AND brandNumber LIKE :searchQuery")
     fun searchQueryShopping(searchQuery: String): Flow<List<Skein>>
 
-        @Query("SELECT * FROM skein_checklist WHERE shopping_cart = '1' ")
-        fun searchShopping(): LiveData<List<Skein>>
+
 
 
 

@@ -100,25 +100,18 @@ private lateinit var adapter: SkeinAdapter
             when (it.itemId) {
                 R.id.show_owned -> {
                     skeinCheckerViewModel.getOwned()
-                    skeinCheckerViewModel.threads.observe(
-                        viewLifecycleOwner,
-                        Observer { it?.let { adapter.data = it } })
-
-
                 }
                 R.id.show_all -> {
                     skeinCheckerViewModel.updateGetAll()
-                    skeinCheckerViewModel.threads.observe(
-                        viewLifecycleOwner,
-                        Observer { it?.let { adapter.data = it } })
                 }
 
                 R.id.show_unowned -> {
                     skeinCheckerViewModel.getUnowned()
-                    skeinCheckerViewModel.threads.observe(
-                        viewLifecycleOwner,
-                        Observer { it?.let { adapter.data = it } })
                 }
+
+                R.id.show_in_use ->{}
+
+                R.id.show_shopping_cart ->{}
             }
             true
         }
