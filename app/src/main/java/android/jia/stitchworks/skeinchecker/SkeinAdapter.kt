@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isGone
+import androidx.core.view.isInvisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -19,7 +20,7 @@ class SkeinAdapter(val clickListener: SkeinListener):
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = getItem(position)
+
         holder.bind(getItem(position)!!, clickListener)
         holder.binding.executePendingBindings()
     }
@@ -53,10 +54,10 @@ class ViewHolder private constructor(val binding: ListItemSkeinBinding) : Recycl
          }
          binding.skeinListAmount.text = item.amountOfSkeins.toString()
          if (!item.inUse) {
-             binding.skeinListOwnedYes.isGone = true
+             binding.skeinListOwnedYes.isInvisible = true
          }
          if (!item.inShoppingCart) {
-             binding.inShoppingCart.isGone = true
+             binding.inShoppingCart.isInvisible = true
          }
 
      }
@@ -81,10 +82,10 @@ class ViewHolder private constructor(val binding: ListItemSkeinBinding) : Recycl
         }
     }
 }
-class SkeinListener(val clickListener: (skeinNumber: Int) -> Unit){
+class SkeinListener(val clickListener: (BrandNumber: String) -> Unit){
 
 
-    fun onClick(skein: Skein) = clickListener(skein.skeinNumber)
+    fun onClick(skein: Skein) = clickListener(skein.brandNumber)
 
 
 

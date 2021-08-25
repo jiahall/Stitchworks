@@ -28,8 +28,9 @@
         <androidx.constraintlayout.widget.ConstraintLayout
 
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_margin="30dp"
+
             >
 
             <TextView
@@ -61,7 +62,7 @@
                 android:layout_width="0dp"
                 android:layout_height="25dp"
                 android:background="#FF018786"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/thread_options"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_baseline_colour_box_outline_blank_24"
                 app:tint="#FF018786" />
@@ -69,7 +70,6 @@
             <ImageView
                 android:id="@+id/skein_list_owned_yes"
                 android:layout_width="wrap_content"
-
 
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toEndOf="@+id/skein_list_in_use_question"
