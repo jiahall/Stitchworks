@@ -9,6 +9,7 @@ import android.jia.stitchworks.databinding.FragmentSkeinCheckerBinding
 import android.view.*
 import android.widget.PopupMenu
 import android.widget.SearchView
+import android.widget.Toast
 
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -17,9 +18,8 @@ class SkeinCheckerFragment : Fragment() {
 
 
 
-//these are here so i can talk to adapter/vm outside of onCreate
+//these are here so i can talk to vm outside of onCreate
 private lateinit var skeinCheckerViewModel: SkeinCheckerViewModel
-private lateinit var adapter: SkeinAdapter
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -42,13 +42,16 @@ private lateinit var adapter: SkeinAdapter
 
         binding.skeinCheckerViewModel = skeinCheckerViewModel
 
+
         // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
         binding.lifecycleOwner = this
 
-         adapter = SkeinAdapter()
+        val adapter = SkeinAdapter(SkeinListener { skeinNumber ->
+            Toast.makeText(context, "${skeinNumber}", Toast.LENGTH_SHORT).show()
+        })
         binding.skeinList.adapter = adapter
 
-        skeinCheckerViewModel.threads.observe(viewLifecycleOwner, Observer { it?.let{adapter.data = it} })
+        skeinCheckerViewModel.threads.observe(viewLifecycleOwner, Observer { it?.let{adapter.submitList(it)} })
 
         binding.searchView.queryHint= "hello, type here"
 
@@ -69,12 +72,12 @@ private lateinit var adapter: SkeinAdapter
 
                     skeinCheckerViewModel.searchDatabase(query).observe(viewLifecycleOwner, { list ->
                         list.let {
-                            adapter.data = it
+                            adapter.submitList(it)
                         }
                     })
                     //need to order the big datalist to actually get here
                 }else if(query == ""){
-                    skeinCheckerViewModel.threads.observe(viewLifecycleOwner, Observer { it?.let{adapter.data = it} })
+                    skeinCheckerViewModel.threads.observe(viewLifecycleOwner, Observer { it?.let{adapter.submitList(it)} })
                 }
                 return true
             }
@@ -83,7 +86,8 @@ private lateinit var adapter: SkeinAdapter
 
 
         //it refers to the view jia
-        binding.searchFilter.setOnClickListener{openMenu(it)}
+        binding.searchFilter.setOnClickListener{openMenu(it)
+        }
         return binding.root
     }
 
@@ -100,6 +104,8 @@ private lateinit var adapter: SkeinAdapter
             when (it.itemId) {
                 R.id.show_owned -> {
                     skeinCheckerViewModel.getOwned()
+
+
                 }
                 R.id.show_all -> {
                     skeinCheckerViewModel.updateGetAll()

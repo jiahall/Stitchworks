@@ -16,6 +16,7 @@ class SkeinCheckerViewModel(dataSource: SkeinDatabaseDao) : ViewModel() {
 
     //the external livedata threads is immutable, this is because we don't want it to be edited outside of the view model
      val threads : LiveData<List<Skein>>
+     //overrid the get function to return the list in _thread
      get() = _threads
 
     init {

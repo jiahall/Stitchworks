@@ -1,34 +1,27 @@
 package android.jia.stitchworks.skeinchecker
 
 import android.graphics.Color
-import android.jia.stitchworks.R
 import android.jia.stitchworks.database.Skein
+import android.jia.stitchworks.databinding.ListItemSkeinBinding
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.Filterable
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.core.view.isGone
-import androidx.core.view.isVisible
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.ColumnInfo
-import androidx.room.PrimaryKey
 
-class SkeinAdapter: RecyclerView.Adapter<ViewHolder>(), Filterable {
-    var data = listOf<Skein>()
-    set(value) {
-        field = value
-        notifyDataSetChanged()
-    }
+class SkeinAdapter(val clickListener: SkeinListener):
+    ListAdapter<Skein, ViewHolder>(ViewHolder.SkeinDiffCallback()) {
 
-    override fun getItemCount() = data.size
+
+
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = data[position]
-        holder.bind(item)
+        val item = getItem(position)
+        holder.bind(getItem(position)!!, clickListener)
+        holder.binding.executePendingBindings()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType:
@@ -36,55 +29,63 @@ class SkeinAdapter: RecyclerView.Adapter<ViewHolder>(), Filterable {
         return ViewHolder.from(parent)
     }
 
-    override fun getFilter(): Filter {
-        TODO("Not yet implemented")
-    }
 
 
 }
 
+class ViewHolder private constructor(val binding: ListItemSkeinBinding) : RecyclerView.ViewHolder(binding.root){
 
-class ViewHolder private constructor(itemView: View) : RecyclerView.ViewHolder(itemView){
+//Usually this is where the viewholder defines each property because of binding they were inlined and so not needed
 
-    val brandNumber : TextView =itemView.findViewById(R.id.skein_list_brand_number)
-    val threadName: TextView = itemView.findViewById(R.id.skein_list_name)
-    val colourValue: ImageView = itemView.findViewById(R.id.skein_list_colour_value)
-    var amountOfSkeins: TextView = itemView.findViewById(R.id.skein_list_amount)
-    var ownedYes: ImageView = itemView.findViewById(R.id.skein_list_owned_yes)
-    var inShoppingCart: ImageView = itemView.findViewById(R.id.in_shopping_cart)
+    fun bind(item: Skein, clickListener: SkeinListener) {
 
+        binding.skein = item
 
+        binding.clickListener = clickListener
 
-
-
-
-
-     fun bind(item: Skein){
-
-        brandNumber.text =item.brandNumber
-        threadName.text = item.threadName
+         binding.skeinListBrandNumber.text = item.brandNumber
+         binding.skeinListName.text = item.threadName
          try {
-             colourValue.setBackgroundColor(Color.parseColor(item.colourValue))
-         }catch (e:IllegalArgumentException){
-             Log.i("SkeinAdapter", "hi jia it was ${brandNumber.text}")
+             binding.skeinListColourValue.setBackgroundColor(Color.parseColor(item.colourValue))
+         } catch (e: IllegalArgumentException) {
+             Log.i("SkeinAdapter", "hi jia it was ${binding.skeinListBrandNumber.text}")
 
          }
-         amountOfSkeins.text = item.amountOfSkeins.toString()
-         if (!item.inUse){
-             ownedYes.isGone = true
+         binding.skeinListAmount.text = item.amountOfSkeins.toString()
+         if (!item.inUse) {
+             binding.skeinListOwnedYes.isGone = true
          }
-         if (item.inShoppingCart){
-             inShoppingCart.isGone = false
+         if (!item.inShoppingCart) {
+             binding.inShoppingCart.isGone = true
          }
 
+     }
+
+    class SkeinDiffCallback: DiffUtil.ItemCallback<Skein>(){
+        override fun areItemsTheSame(oldItem: Skein, newItem: Skein): Boolean {
+            return oldItem.brandNumber == newItem.brandNumber
+        }
+
+        override fun areContentsTheSame(oldItem: Skein, newItem: Skein): Boolean {
+            return oldItem== newItem
+        }
     }
+
+
     //The from() function needs to be in a companion object so it can be called on the ViewHolder class, not called on a ViewHolder instance.
     companion object {
         fun from(parent: ViewGroup): ViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
-            val view = layoutInflater
-                .inflate(R.layout.list_item_skein, parent, false)
-            return ViewHolder(view)
+            val binding = ListItemSkeinBinding.inflate(layoutInflater, parent, false)
+            return ViewHolder(binding)
         }
     }
+}
+class SkeinListener(val clickListener: (skeinNumber: Int) -> Unit){
+
+
+    fun onClick(skein: Skein) = clickListener(skein.skeinNumber)
+
+
+
 }
