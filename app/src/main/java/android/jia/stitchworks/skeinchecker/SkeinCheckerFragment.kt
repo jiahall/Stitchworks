@@ -68,7 +68,7 @@ private lateinit var skeinCheckerViewModel: SkeinCheckerViewModel
             //you gotta change this to filter the threads observable
             override fun onQueryTextChange(query: String?): Boolean {
                 if (query != null){//add and for null case
-                    //I GUESS YOUD ADD AN OBSERVER HERE TOO OR MAYBE TURN THE OBSERVER INTO A WHEN CASE
+                    //I GUESS YOU'D ADD AN OBSERVER HERE TOO OR MAYBE TURN THE OBSERVER INTO A WHEN CASE
 
                     skeinCheckerViewModel.searchDatabase(query).observe(viewLifecycleOwner, { list ->
                         list.let {
