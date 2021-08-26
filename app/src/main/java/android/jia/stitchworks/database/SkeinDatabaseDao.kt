@@ -1,7 +1,6 @@
 package android.jia.stitchworks.database
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
@@ -33,7 +32,7 @@ interface SkeinDatabaseDao {
     @Query("DELETE  FROM skein_checklist")
     suspend fun deleteAll()
 
-    @Query("SELECT * FROM skein_checklist WHERE brandNumber LIKE :searchQuery ORDER BY skein_number ASC")
+    @Query("SELECT * FROM skein_checklist WHERE brandNumber OR thread_name LIKE :searchQuery ORDER BY skein_number ASC")
         fun searchDatabase(searchQuery: String): Flow<List<Skein>>
 
     @Query("SELECT * FROM skein_checklist WHERE shopping_cart = '1' AND brandNumber LIKE :searchQuery")
