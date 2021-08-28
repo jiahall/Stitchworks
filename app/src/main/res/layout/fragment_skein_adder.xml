@@ -16,7 +16,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/brand_selector"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -27,51 +27,49 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Spinner
-            android:id="@+id/spinner"
+            android:id="@+id/thread_letter"
             android:layout_width="38dp"
             android:layout_height="29dp"
             android:layout_marginStart="4dp"
             android:layout_marginTop="12dp"
-            app:layout_constraintEnd_toStartOf="@+id/editTextTextPersonName2"
+            app:layout_constraintEnd_toStartOf="@+id/skein_start_inserter"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/brand_selector" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/skein_seperator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
             android:text="-"
-            tools:layout_editor_absoluteX="203dp"
-            tools:layout_editor_absoluteY="48dp" />
+            app:layout_constraintTop_toBottomOf="@+id/brand_selector"
+            app:layout_constraintStart_toEndOf="@id/skein_start_inserter"
+            app:layout_constraintEnd_toStartOf="@id/skein_end_inserter" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName2"
+            android:id="@+id/skein_start_inserter"
             android:layout_width="105dp"
             android:layout_height="26dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="28dp"
-            android:ems="10"
+            android:layout_marginTop="12dp"
             android:inputType="textPersonName"
-            android:text="Name"
-            app:layout_constraintEnd_toStartOf="@+id/textView3"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintStart_toEndOf="@id/thread_letter"
+            app:layout_constraintEnd_toStartOf="@+id/skein_seperator"
+            app:layout_constraintTop_toBottomOf="@+id/brand_selector" />
+
 
         <EditText
-            android:id="@+id/editTextTextPersonName3"
+            android:id="@+id/skein_end_inserter"
             android:layout_width="105dp"
             android:layout_height="26dp"
             android:layout_marginTop="12dp"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Name"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.43"
-            app:layout_constraintStart_toEndOf="@+id/textView3"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
-
+            app:layout_constraintStart_toEndOf="@+id/skein_seperator"
+            app:layout_constraintTop_toBottomOf="@+id/brand_selector" />
 
         <com.google.android.material.slider.Slider
-            android:id="@+id/slider"
+            android:id="@+id/skein_slider"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="56dp"
@@ -79,28 +77,34 @@
             android:valueFrom="0"
             android:valueTo="3"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            app:layout_constraintTop_toBottomOf="@+id/skein_seperator" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/submit_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+            android:text="Submit"
+            app:layout_constraintEnd_toStartOf="@id/undo_button"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recyclerView"
-            app:layout_constraintVertical_bias="0.287" />
+            app:layout_constraintTop_toBottomOf="@+id/skein_selector_recycler" />
+
+        <Button
+            android:id="@+id/undo_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Undo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/submit_button"
+            app:layout_constraintTop_toBottomOf="@+id/skein_selector_recycler" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="409dp"
+            android:id="@+id/skein_selector_recycler"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="84dp"
+            android:layout_marginTop="42dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/slider" />
+            app:layout_constraintTop_toBottomOf="@+id/skein_slider" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
