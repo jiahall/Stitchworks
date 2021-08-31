@@ -9,9 +9,15 @@ import android.view.ViewGroup
 import android.jia.stitchworks.R
 import android.jia.stitchworks.database.SkeinDatabase
 import android.jia.stitchworks.databinding.FragmentSkeinAdderBinding
+import android.jia.stitchworks.skeinchecker.SkeinCheckerAdapter
+import android.jia.stitchworks.skeinchecker.SkeinListener
+import android.widget.Toast
+import androidx.core.view.isGone
 
 
 import androidx.databinding.DataBindingUtil
+import com.google.android.material.slider.RangeSlider
+import com.google.android.material.slider.Slider
 
 class SkeinAdderFragment : Fragment() {
 
@@ -40,8 +46,34 @@ class SkeinAdderFragment : Fragment() {
 
         binding.lifecycleOwner = this
 
+
+
+
+
+
+
+        binding.skeinSlider.addOnChangeListener { slider, value, fromUser ->
+            when (value.toInt()) {
+                0 -> {
+                    binding.skeinSeperator.isGone = false
+                    binding.skeinEndInserter.isGone = false
+                }
+                1 -> {
+                    binding.skeinSeperator.isGone = true
+                    binding.skeinEndInserter.isGone = true
+                }
+                2 -> {
+                    binding.skeinSeperator.isGone = true
+                    binding.skeinEndInserter.isGone = true
+                }
+                3 -> {
+                    binding.skeinSeperator.isGone = false
+                    binding.skeinEndInserter.isGone = false
+                }
+            }
+        }
+
         return binding.root
     }
-
 
 }

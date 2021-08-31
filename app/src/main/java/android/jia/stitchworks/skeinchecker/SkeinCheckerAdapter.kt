@@ -13,10 +13,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
-class SkeinAdapter(val clickListener: SkeinListener):
+class SkeinCheckerAdapter(val clickListener: SkeinListener) :
     ListAdapter<Skein, ViewHolder>(ViewHolder.SkeinDiffCallback()) {
-
-
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Thread list" />
-    <item android:title="Thread organiser" />
-    <item android:title="Project list" />
+    <item
+        android:title="Thread list"
+        android:id="@+id/skeinCheckerFragment" />
+    <item
+        android:title="Thread organiser"
+        android:id="@+id/skeinAdderFragment" />
+    <item
+        android:title="Project list"
+        android:id="@+id/skein_project_fragment" />
 </menu>

@@ -9,5 +9,14 @@
         android:id="@+id/skeinCheckerFragment"
         android:name="android.jia.stitchworks.skeinchecker.SkeinCheckerFragment"
         android:label="skein_checker_fragment"
-        tools:layout="@layout/fragment_skein_checker" />
+        tools:layout="@layout/fragment_skein_checker">
+        <action
+            android:id="@+id/action_skeinCheckerFragment_to_skeinAdderFragment"
+            app:destination="@id/skeinAdderFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/skeinAdderFragment"
+        android:name="android.jia.stitchworks.skeinadder.SkeinAdderFragment"
+        android:label="fragment_skein_adder"
+        tools:layout="@layout/fragment_skein_adder" />
 </navigation>

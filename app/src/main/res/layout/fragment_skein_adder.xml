@@ -26,21 +26,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Spinner
-            android:id="@+id/thread_letter"
-            android:layout_width="38dp"
-            android:layout_height="29dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="12dp"
-            app:layout_constraintEnd_toStartOf="@+id/skein_start_inserter"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/brand_selector" />
-
         <TextView
             android:id="@+id/skein_seperator"
+            app:layout_constraintHorizontal_weight="0.1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="13dp"
+            android:paddingHorizontal="8dp"
             android:text="-"
             app:layout_constraintTop_toBottomOf="@+id/brand_selector"
             app:layout_constraintStart_toEndOf="@id/skein_start_inserter"
@@ -48,20 +40,24 @@
 
         <EditText
             android:id="@+id/skein_start_inserter"
-            android:layout_width="105dp"
+            app:layout_constraintHorizontal_weight="1"
+            android:layout_width="0dp"
             android:layout_height="26dp"
             android:layout_marginTop="12dp"
+            android:layout_marginHorizontal="8dp"
             android:inputType="textPersonName"
-            app:layout_constraintStart_toEndOf="@id/thread_letter"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/skein_seperator"
             app:layout_constraintTop_toBottomOf="@+id/brand_selector" />
 
 
         <EditText
             android:id="@+id/skein_end_inserter"
-            android:layout_width="105dp"
+            app:layout_constraintHorizontal_weight="1"
+            android:layout_width="0dp"
             android:layout_height="26dp"
             android:layout_marginTop="12dp"
+            android:layout_marginHorizontal="8dp"
             android:ems="10"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
@@ -72,12 +68,13 @@
             android:id="@+id/skein_slider"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="56dp"
+            android:layout_marginTop="32dp"
             android:stepSize="1"
             android:valueFrom="0"
             android:valueTo="3"
+            app:labelBehavior="gone"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/skein_seperator" />
+            app:layout_constraintTop_toBottomOf="@+id/skein_start_inserter" />
 
         <Button
             android:id="@+id/submit_button"

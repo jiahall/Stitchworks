@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="skein"
+            type="android.jia.stitchworks.database.Skein" />
+
+        <variable
+            name="clickListener"
+            type="android.jia.stitchworks.skeinadder.SkeinListener" />
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/card_view"
+        android:layout_margin="5dp"
+        app:cardBackgroundColor="#81C784"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="3dp"
+        app:contentPadding="4dp"
+        android:onClick="@{()-> clickListener.onClick(skein)}">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="30dp"
+
+            >
+
+            <TextView
+                android:id="@+id/skein_list_brand_number"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="B1702" />
+
+            <TextView
+                android:id="@+id/skein_list_dash"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" - "
+                app:layout_constraintStart_toEndOf="@+id/skein_list_brand_number"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/skein_list_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@+id/skein_list_dash"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="dark green" />
+
+            <ImageView
+                android:id="@+id/skein_list_colour_value"
+                android:layout_width="0dp"
+                android:layout_height="25dp"
+                android:background="#FF018786"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_baseline_colour_box_outline_blank_24"
+                app:tint="#FF018786" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>
