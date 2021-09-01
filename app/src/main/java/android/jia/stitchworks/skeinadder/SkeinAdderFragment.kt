@@ -9,15 +9,12 @@ import android.view.ViewGroup
 import android.jia.stitchworks.R
 import android.jia.stitchworks.database.SkeinDatabase
 import android.jia.stitchworks.databinding.FragmentSkeinAdderBinding
-import android.jia.stitchworks.skeinchecker.SkeinCheckerAdapter
-import android.jia.stitchworks.skeinchecker.SkeinListener
 import android.widget.Toast
 import androidx.core.view.isGone
 
 
 import androidx.databinding.DataBindingUtil
-import com.google.android.material.slider.RangeSlider
-import com.google.android.material.slider.Slider
+import androidx.lifecycle.Observer
 
 class SkeinAdderFragment : Fragment() {
 
@@ -47,6 +44,16 @@ class SkeinAdderFragment : Fragment() {
         binding.lifecycleOwner = this
 
 
+        val adapter = SkeinAdderAdapter(SkeinAdderListener { brandNumber ->
+            skeinAdderViewModel.addThread(brandNumber)
+            Toast.makeText(context, "just added $brandNumber to database", Toast.LENGTH_LONG).show()
+
+        })
+        binding.skeinSelectorRecycler.adapter = adapter
+
+        skeinAdderViewModel.threads.observe(
+            viewLifecycleOwner,
+            Observer { it?.let { adapter.submitList(it) } })
 
 
 

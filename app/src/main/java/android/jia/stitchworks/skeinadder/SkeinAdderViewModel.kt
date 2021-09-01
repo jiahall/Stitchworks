@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
 class SkeinAdderViewModel(dataSource: SkeinDatabaseDao) : ViewModel() {
+
     val database = dataSource
 
     // Internally we use mutablelive data to update the list with live values
@@ -16,16 +17,25 @@ class SkeinAdderViewModel(dataSource: SkeinDatabaseDao) : ViewModel() {
 
     //the external livedata threads is immutable, this is because we don't want it to be edited outside of the view model
     val threads: LiveData<List<Skein>>
-        //overrid the get function to return the list in _thread
+        //override the get function to return the list in _thread
         get() = _threads
 
     init {
-        updateGetAll()
+        getUnowned()
     }
 
-    fun updateGetAll() {
+
+    fun getUnowned() {
         viewModelScope.launch {
-            _threads.value = database.getAllThreads()
+            _threads.value = database.getUnowned()
         }
+    }
+
+    fun addThread(brandNumber: String) {
+        viewModelScope.launch {
+            database.addThread(brandNumber)
+            _threads.value = database.getUnowned()
+        }
+
     }
 }

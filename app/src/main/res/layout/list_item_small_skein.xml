@@ -11,7 +11,7 @@
 
         <variable
             name="clickListener"
-            type="android.jia.stitchworks.skeinadder.SkeinListener" />
+            type="android.jia.stitchworks.skeinadder.SkeinAdderListener" />
 
     </data>
 

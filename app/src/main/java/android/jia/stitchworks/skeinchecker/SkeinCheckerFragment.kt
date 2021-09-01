@@ -46,7 +46,7 @@ private lateinit var skeinCheckerViewModel: SkeinCheckerViewModel
         // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
         binding.lifecycleOwner = this
 
-        val adapter = SkeinCheckerAdapter(SkeinListener { brandNumber ->
+        val adapter = SkeinCheckerAdapter(SkeinCheckerListener { brandNumber ->
             Toast.makeText(context, "${brandNumber}", Toast.LENGTH_SHORT).show()
         })
         binding.skeinList.adapter = adapter

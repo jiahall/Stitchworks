@@ -10,7 +10,7 @@
 
         <variable
             name="clickListener"
-            type="android.jia.stitchworks.skeinchecker.SkeinListener" />
+            type="android.jia.stitchworks.skeinchecker.SkeinCheckerListener" />
 
     </data>
 

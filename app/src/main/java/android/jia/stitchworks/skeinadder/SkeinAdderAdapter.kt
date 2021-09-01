@@ -2,23 +2,21 @@ package android.jia.stitchworks.skeinadder
 
 import android.graphics.Color
 import android.jia.stitchworks.database.Skein
-import android.jia.stitchworks.databinding.ListItemSkeinBinding
 import android.jia.stitchworks.databinding.ListItemSmallSkeinBinding
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.isInvisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
-class SkeinAdderAdapter(val clickListener: SkeinListener) :
+class SkeinAdderAdapter(val clickAdderListener: SkeinAdderListener) :
     ListAdapter<Skein, ViewHolder>(ViewHolder.SkeinDiffCallback()) {
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        holder.bind(getItem(position)!!, clickListener)
+        holder.bind(getItem(position)!!, clickAdderListener)
         holder.binding.executePendingBindings()
     }
 
@@ -37,11 +35,11 @@ class ViewHolder private constructor(val binding: ListItemSmallSkeinBinding) :
 
 //Usually this is where the viewholder defines each property because of binding they were inlined and so not needed
 
-    fun bind(item: Skein, clickListener: SkeinListener) {
+    fun bind(item: Skein, clickAdderListener: SkeinAdderListener) {
 
         binding.skein = item
 
-        binding.clickListener = clickListener
+        binding.clickListener = clickAdderListener
 
         binding.skeinListBrandNumber.text = item.brandNumber
         binding.skeinListName.text = item.threadName
@@ -75,7 +73,7 @@ class ViewHolder private constructor(val binding: ListItemSmallSkeinBinding) :
     }
 }
 
-class SkeinListener(val clickListener: (BrandNumber: String) -> Unit) {
+class SkeinAdderListener(val clickListener: (BrandNumber: String) -> Unit) {
 
 
     fun onClick(skein: Skein) = clickListener(skein.brandNumber)

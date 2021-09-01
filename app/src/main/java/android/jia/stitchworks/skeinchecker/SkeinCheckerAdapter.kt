@@ -5,25 +5,24 @@ import android.jia.stitchworks.database.Skein
 import android.jia.stitchworks.databinding.ListItemSkeinBinding
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
-class SkeinCheckerAdapter(val clickListener: SkeinListener) :
+class SkeinCheckerAdapter(val clickCheckerListener: SkeinCheckerListener) :
     ListAdapter<Skein, ViewHolder>(ViewHolder.SkeinDiffCallback()) {
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        holder.bind(getItem(position)!!, clickListener)
+        holder.bind(getItem(position)!!, clickCheckerListener)
         holder.binding.executePendingBindings()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType:
+    override fun onCreateViewHolder(
+        parent: ViewGroup, viewType:
     Int): ViewHolder {
         return ViewHolder.from(parent)
     }
@@ -36,17 +35,17 @@ class ViewHolder private constructor(val binding: ListItemSkeinBinding) : Recycl
 
 //Usually this is where the viewholder defines each property because of binding they were inlined and so not needed
 
-    fun bind(item: Skein, clickListener: SkeinListener) {
+    fun bind(item: Skein, clickCheckerListener: SkeinCheckerListener) {
 
         binding.skein = item
 
-        binding.clickListener = clickListener
+        binding.clickListener = clickCheckerListener
 
-         binding.skeinListBrandNumber.text = item.brandNumber
-         binding.skeinListName.text = item.threadName
-         try {
-             binding.skeinListColourValue.setBackgroundColor(Color.parseColor(item.colourValue))
-         } catch (e: IllegalArgumentException) {
+        binding.skeinListBrandNumber.text = item.brandNumber
+        binding.skeinListName.text = item.threadName
+        try {
+            binding.skeinListColourValue.setBackgroundColor(Color.parseColor(item.colourValue))
+        } catch (e: IllegalArgumentException) {
              Log.i("SkeinAdapter", "hi jia it was ${binding.skeinListBrandNumber.text}")
 
          }
@@ -80,11 +79,11 @@ class ViewHolder private constructor(val binding: ListItemSkeinBinding) : Recycl
         }
     }
 }
-class SkeinListener(val clickListener: (BrandNumber: String) -> Unit){
+
+class SkeinCheckerListener(val clickListener: (BrandNumber: String) -> Unit) {
 
 
     fun onClick(skein: Skein) = clickListener(skein.brandNumber)
-
 
 
 }

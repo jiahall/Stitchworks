@@ -33,16 +33,13 @@ interface SkeinDatabaseDao {
     suspend fun deleteAll()
 
     @Query("SELECT * FROM skein_checklist WHERE brandNumber LIKE :searchQuery OR thread_name LIKE :searchQuery ORDER BY skein_number ASC")
-        fun searchDatabase(searchQuery: String): Flow<List<Skein>>
+    fun searchDatabase(searchQuery: String): Flow<List<Skein>>
 
     @Query("SELECT * FROM skein_checklist WHERE shopping_cart = '1' AND brandNumber LIKE :searchQuery")
     fun searchQueryShopping(searchQuery: String): Flow<List<Skein>>
 
-
-
-
-
-
+    @Query("UPDATE skein_checklist SET amount = 1 WHERE brandNumber = :brandNumber")
+    suspend fun addThread(brandNumber: String)
 
 
 }
