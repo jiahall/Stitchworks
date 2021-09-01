@@ -56,9 +56,6 @@ class SkeinAdderFragment : Fragment() {
             Observer { it?.let { adapter.submitList(it) } })
 
 
-
-
-
         binding.skeinSlider.addOnChangeListener { slider, value, fromUser ->
             when (value.toInt()) {
                 0 -> {
@@ -82,5 +79,6 @@ class SkeinAdderFragment : Fragment() {
 
         return binding.root
     }
+
 
 }
