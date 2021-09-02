@@ -17,17 +17,20 @@ import androidx.lifecycle.Observer
 class SkeinCheckerFragment : Fragment() {
 
 
-
-//these are here so i can talk to vm outside of onCreate
-private lateinit var skeinCheckerViewModel: SkeinCheckerViewModel
-
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    //these are here so i can talk to vm outside of onCreate
+    private lateinit var skeinCheckerViewModel: SkeinCheckerViewModel
 
 
-        val binding: FragmentSkeinCheckerBinding = DataBindingUtil.inflate(inflater,
-        R.layout.fragment_skein_checker, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+
+        val binding: FragmentSkeinCheckerBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_skein_checker, container, false
+        )
 
         val application = requireNotNull(this.activity).application
 
@@ -36,7 +39,7 @@ private lateinit var skeinCheckerViewModel: SkeinCheckerViewModel
         val viewModelFactory = SkeinCheckerViewModelFactory(dataSource)
 
 
-         skeinCheckerViewModel =
+        skeinCheckerViewModel =
             ViewModelProvider(this, viewModelFactory)
                 .get(SkeinCheckerViewModel::class.java)
 
@@ -58,6 +61,7 @@ private lateinit var skeinCheckerViewModel: SkeinCheckerViewModel
 
 
 
+
         binding.searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener,
             SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -70,14 +74,16 @@ private lateinit var skeinCheckerViewModel: SkeinCheckerViewModel
                 if (query != null){//add and for null case
                     //I GUESS YOU'D ADD AN OBSERVER HERE TOO OR MAYBE TURN THE OBSERVER INTO A WHEN CASE
 
-                    skeinCheckerViewModel.searchDatabase(query).observe(viewLifecycleOwner, { list ->
-                        list.let {
+                    skeinCheckerViewModel.searchDatabase(query).observe(viewLifecycleOwner, {
+                        it?.let {
                             adapter.submitList(it)
+                            binding.skeinList.layoutManager?.scrollToPosition(1)
                         }
                     })
                     //need to order the big datalist to actually get here
                 }else if(query == ""){
                     skeinCheckerViewModel.threads.observe(viewLifecycleOwner, Observer { it?.let{adapter.submitList(it)} })
+                    binding.skeinList.layoutManager?.scrollToPosition(1)
                 }
                 return true
             }
@@ -100,8 +106,7 @@ private lateinit var skeinCheckerViewModel: SkeinCheckerViewModel
         popupMenu.setOnMenuItemClickListener {
 
 
-            //we gotta figure this out
-            when (it.itemId) {
+        when (it.itemId) {
                 R.id.show_owned -> {
                     skeinCheckerViewModel.getOwned()
 
