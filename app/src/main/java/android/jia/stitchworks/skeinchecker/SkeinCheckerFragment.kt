@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.jia.stitchworks.R
 import android.jia.stitchworks.database.SkeinDatabase
 import android.jia.stitchworks.databinding.FragmentSkeinCheckerBinding
+import android.jia.stitchworks.onQueryTextChanged
 import android.view.*
 import android.widget.PopupMenu
 import android.widget.SearchView
@@ -13,6 +14,9 @@ import android.widget.Toast
 
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.*
 
 class SkeinCheckerFragment : Fragment() {
 
@@ -53,42 +57,55 @@ class SkeinCheckerFragment : Fragment() {
             Toast.makeText(context, "${brandNumber}", Toast.LENGTH_SHORT).show()
         })
         binding.skeinList.adapter = adapter
-
-        skeinCheckerViewModel.threads.observe(viewLifecycleOwner, Observer { it?.let{adapter.submitList(it)} })
-
-        binding.searchView.queryHint= "hello, type here"
+        binding.skeinList.layoutManager = LinearLayoutManager(requireContext())
+        binding.skeinList.setHasFixedSize(true)
 
 
-
-
-
-        binding.searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener,
-            SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                binding.searchView.clearFocus()
-                return true
+        adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onChanged() {
+                binding.skeinList.scrollToPosition(0)
             }
 
-            //you gotta change this to filter the threads observable
-            override fun onQueryTextChange(query: String?): Boolean {
-                if (query != null){//add and for null case
-                    //I GUESS YOU'D ADD AN OBSERVER HERE TOO OR MAYBE TURN THE OBSERVER INTO A WHEN CASE
-
-                    skeinCheckerViewModel.searchDatabase(query).observe(viewLifecycleOwner, {
-                        it?.let {
-                            adapter.submitList(it)
-                            binding.skeinList.layoutManager?.scrollToPosition(1)
-                        }
-                    })
-                    //need to order the big datalist to actually get here
-                }else if(query == ""){
-                    skeinCheckerViewModel.threads.observe(viewLifecycleOwner, Observer { it?.let{adapter.submitList(it)} })
-                    binding.skeinList.layoutManager?.scrollToPosition(1)
-                }
-                return true
+            override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
+                binding.skeinList.scrollToPosition(0)
             }
 
+            override fun onItemRangeMoved(fromPosition: Int, toPosition: Int, itemCount: Int) {
+                binding.skeinList.scrollToPosition(0)
+            }
+
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                binding.skeinList.scrollToPosition(0)
+            }
+
+            override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
+                binding.skeinList.scrollToPosition(0)
+            }
+
+            override fun onItemRangeChanged(positionStart: Int, itemCount: Int, payload: Any?) {
+                binding.skeinList.scrollToPosition(0)
+            }
         })
+
+
+        //skeinCheckerViewModel.getOwned()
+        //skeinCheckerViewModel.threads.observe(viewLifecycleOwner, Observer { it?.let{adapter.submitList(it)} })
+        skeinCheckerViewModel.test.observe(
+            viewLifecycleOwner,
+            Observer { it?.let { adapter.submitList(it) } })
+
+
+        binding.searchView.queryHint = "hello, type here"
+
+
+
+
+
+
+        binding.searchView.onQueryTextChanged {
+            skeinCheckerViewModel.searchQuery.value = it
+
+        }
 
 
         //it refers to the view jia
@@ -106,7 +123,7 @@ class SkeinCheckerFragment : Fragment() {
         popupMenu.setOnMenuItemClickListener {
 
 
-        when (it.itemId) {
+            when (it.itemId) {
                 R.id.show_owned -> {
                     skeinCheckerViewModel.getOwned()
 
@@ -129,3 +146,5 @@ class SkeinCheckerFragment : Fragment() {
 
     }
 }
+
+

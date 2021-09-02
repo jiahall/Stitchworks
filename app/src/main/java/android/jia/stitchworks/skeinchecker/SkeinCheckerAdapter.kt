@@ -23,7 +23,8 @@ class SkeinCheckerAdapter(val clickCheckerListener: SkeinCheckerListener) :
 
     override fun onCreateViewHolder(
         parent: ViewGroup, viewType:
-    Int): ViewHolder {
+        Int
+    ): ViewHolder {
         return ViewHolder.from(parent)
     }
 
@@ -46,22 +47,23 @@ class ViewHolder private constructor(val binding: ListItemSkeinBinding) : Recycl
         try {
             binding.skeinListColourValue.setBackgroundColor(Color.parseColor(item.colourValue))
         } catch (e: IllegalArgumentException) {
-             Log.i("SkeinAdapter", "hi jia it was ${binding.skeinListBrandNumber.text}")
+            Log.i("SkeinAdapter", "hi jia it was ${binding.skeinListBrandNumber.text}")
 
-         }
-         binding.skeinListAmount.text = item.amountOfSkeins.toString()
-         if (!item.inUse) {
-             binding.skeinListOwnedYes.isInvisible = true
-         }
-         if (!item.inShoppingCart) {
-             binding.inShoppingCart.isInvisible = true
-         }
+        }
+        binding.skeinListAmount.text = item.amountOfSkeins.toString()
+        if (!item.inUse) {
+            binding.skeinListOwnedYes.isInvisible = true
+        }
+        if (!item.inShoppingCart) {
+            binding.inShoppingCart.isInvisible = true
+        }
 
-     }
+    }
 
     class SkeinDiffCallback: DiffUtil.ItemCallback<Skein>(){
         override fun areItemsTheSame(oldItem: Skein, newItem: Skein): Boolean {
             return oldItem.brandNumber == newItem.brandNumber
+
         }
 
         override fun areContentsTheSame(oldItem: Skein, newItem: Skein): Boolean {

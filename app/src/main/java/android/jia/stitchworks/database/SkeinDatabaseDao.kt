@@ -38,8 +38,8 @@ interface SkeinDatabaseDao {
     @Query("SELECT * FROM skein_checklist WHERE brandNumber LIKE :searchQuery OR thread_name LIKE :searchQuery ORDER BY skein_number ASC")
     fun searchDatabase(searchQuery: String): Flow<List<Skein>>
 
-    @Query("SELECT * FROM skein_checklist WHERE shopping_cart = '1' AND brandNumber LIKE :searchQuery")
-    fun searchQueryShopping(searchQuery: String): Flow<List<Skein>>
+    @Query("SELECT * FROM skein_checklist WHERE amount = 1 AND brandNumber LIKE :searchQuery OR thread_name LIKE :searchQuery ORDER BY skein_number ASC")
+    fun searchOwned(searchQuery: String): Flow<List<Skein>>
 
     @Query("UPDATE skein_checklist SET amount = 1 WHERE brandNumber = :brandNumber")
     suspend fun addThread(brandNumber: String)
@@ -52,6 +52,9 @@ interface SkeinDatabaseDao {
 
     @Query("SELECT * FROM skein_checklist WHERE amount >= 1 AND brandNumber LIKE :searchQuery OR thread_name LIKE :searchQuery ORDER BY skein_number ASC")
     fun searchOwnedDatabase(searchQuery: String): Flow<List<Skein>>
+
+    @Query("SELECT * FROM skein_checklist WHERE brandNumber LIKE '%' || :searchQuery || '%' ORDER BY skein_number ASC")
+    fun getAll2(searchQuery: String): Flow<List<Skein>>
 
 
 }
