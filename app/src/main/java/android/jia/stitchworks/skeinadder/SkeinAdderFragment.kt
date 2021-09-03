@@ -73,23 +73,23 @@ class SkeinAdderFragment : Fragment() {
                 0 -> {
                     binding.skeinSeperator.isGone = false
                     binding.skeinEndInserter.isGone = false
-                    skeinAdderViewModel.getUnowned()
+                   // skeinAdderViewModel.getUnowned()
 
                 }
                 1 -> {
                     binding.skeinSeperator.isGone = true
                     binding.skeinEndInserter.isGone = true
-                    skeinAdderViewModel.getUnowned()
+                    //  skeinAdderViewModel.getUnowned()
                 }
                 2 -> {
                     binding.skeinSeperator.isGone = true
                     binding.skeinEndInserter.isGone = true
-                    skeinAdderViewModel.getOwned()
+                    //   skeinAdderViewModel.getOwned()
                 }
                 3 -> {
                     binding.skeinSeperator.isGone = false
                     binding.skeinEndInserter.isGone = false
-                    skeinAdderViewModel.getOwned()
+                    //  skeinAdderViewModel.getOwned()
                 }
             }
         }
@@ -114,12 +114,12 @@ class SkeinAdderFragment : Fragment() {
                     .show()
             }
             2 -> {
-                skeinAdderViewModel.removeThread(brandNumber)
+                //skeinAdderViewModel.removeThread(brandNumber)
                 Toast.makeText(context, "just removed $brandNumber to database", Toast.LENGTH_LONG)
                     .show()
             }
             3 -> {
-                skeinAdderViewModel.removeThread(brandNumber)
+                //   skeinAdderViewModel.removeThread(brandNumber)
                 Toast.makeText(context, "just removed $brandNumber to database", Toast.LENGTH_LONG)
                     .show()
             }

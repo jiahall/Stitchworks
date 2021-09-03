@@ -87,10 +87,7 @@ class SkeinCheckerFragment : Fragment() {
             }
         })
 
-
-        //skeinCheckerViewModel.getOwned()
-        //skeinCheckerViewModel.threads.observe(viewLifecycleOwner, Observer { it?.let{adapter.submitList(it)} })
-        skeinCheckerViewModel.test.observe(
+        skeinCheckerViewModel.threads.observe(
             viewLifecycleOwner,
             Observer { it?.let { adapter.submitList(it) } })
 
@@ -125,16 +122,16 @@ class SkeinCheckerFragment : Fragment() {
 
             when (it.itemId) {
                 R.id.show_owned -> {
-                    skeinCheckerViewModel.getOwned()
+                    skeinCheckerViewModel.filterSkein.value = FilterSkein.BY_OWNED
 
 
                 }
                 R.id.show_all -> {
-                    skeinCheckerViewModel.updateGetAll()
+                    skeinCheckerViewModel.filterSkein.value = FilterSkein.BY_ALL
                 }
 
                 R.id.show_unowned -> {
-                    skeinCheckerViewModel.getUnowned()
+                    skeinCheckerViewModel.filterSkein.value = FilterSkein.BY_UNOWNED
                 }
 
                 R.id.show_in_use ->{}

@@ -36,28 +36,28 @@ class SkeinAdderViewModel(dataSource: SkeinDatabaseDao) : ViewModel() {
 
     }
 
-    fun removeThread(brandNumber: String) {
-        viewModelScope.launch {
-            database.removeThread(brandNumber)
-            _threads.value = database.getOwned()
-        }
+    // fun removeThread(brandNumber: String) {
+    //    viewModelScope.launch {
+    //       database.removeThread(brandNumber)
+    //      _threads.value = database.getOwned()
+    // }
 
-    }
+    // }
 
-    fun searchDatabase(value: Int, query: String): LiveData<List<Skein>> {
-        val searchQuery = "%$query%"
+    // fun searchDatabase(value: Int, query: String): LiveData<List<Skein>> {
+    //    val searchQuery = "%$query%"
+//
+    //       return when (value) {
+    //          1 -> database.searchUnownedDatabase(searchQuery).asLiveData()
+    //         2 -> database.searchOwnedDatabase(searchQuery).asLiveData()
+    //        else -> database.searchDatabase(searchQuery).asLiveData()
+    //   }
 
-        return when (value) {
-            1 -> database.searchUnownedDatabase(searchQuery).asLiveData()
-            2 -> database.searchOwnedDatabase(searchQuery).asLiveData()
-            else -> database.searchDatabase(searchQuery).asLiveData()
-        }
+    //}
 
-    }
-
-    fun getOwned() {
-        viewModelScope.launch {
-            _threads.value = database.getOwned()
-        }
-    }
+    //fun getOwned() {
+    //   viewModelScope.launch {
+    //      _threads.value = database.getOwned()
+    // }
+    // }
 }

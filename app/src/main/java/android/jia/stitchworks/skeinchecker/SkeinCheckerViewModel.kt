@@ -5,54 +5,31 @@ import android.jia.stitchworks.database.Skein
 import android.jia.stitchworks.database.SkeinDatabaseDao
 import androidx.lifecycle.*
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.launch
-import javax.sql.DataSource
 
 class SkeinCheckerViewModel(dataSource: SkeinDatabaseDao) : ViewModel() {
 
     val database = dataSource
 
+    val searchQuery = MutableStateFlow("")
+    val filterSkein = MutableStateFlow(FilterSkein.BY_ALL)
+
+    private val skeinFlow = combine(searchQuery, filterSkein)
+    { query, filterSkein -> Pair(query, filterSkein) }
+        .flatMapLatest { (query, filterSkein) -> database.getSkeins(query, filterSkein) }
+
     // Internally we use mutablelive data to update the list with live values
-    private val _threads = MutableLiveData<List<Skein>>()
+    private val _threads = skeinFlow
+
 
     //the external livedata threads is immutable, this is because we don't want it to be edited outside of the view model
     val threads: LiveData<List<Skein>>
         //overrid the get function to return the list in _thread
-        get() = _threads
+        get() = _threads.asLiveData()
 
 
-    val filterSkein = MutableStateFlow(FilterSkein.BY_ALL)
-    val searchQuery = MutableStateFlow("")
-
-    private val skeinFlow = searchQuery.flatMapLatest { database.getAll2(it) }
-
-    val test = skeinFlow.asLiveData()
-
-
-    fun searchOwned(query: String): LiveData<List<Skein>> {
-        val searchQuery = "%$query%"
-        return database.searchOwned(searchQuery).asLiveData()
-    }
-
-    fun getOwned() {
-        viewModelScope.launch {
-            _threads.value = database.getOwned()
-        }
-    }
-
-    fun updateGetAll() {
-        viewModelScope.launch {
-            _threads.value = database.getAllThreads()
-        }
-    }
-
-    fun getUnowned() {
-        viewModelScope.launch {
-            _threads.value = database.getUnowned()
-        }
-    }
 
 
 }
