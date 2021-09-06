@@ -4,6 +4,7 @@ package android.jia.stitchworks.skeinadder
 import android.jia.stitchworks.R
 import android.jia.stitchworks.database.SkeinDatabase
 import android.jia.stitchworks.databinding.FragmentSkeinAdderBinding
+import android.jia.stitchworks.onQueryTextChanged
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class SkeinAdderFragment : Fragment() {
 
@@ -49,10 +51,38 @@ class SkeinAdderFragment : Fragment() {
 
 
         val adapter = SkeinAdderAdapter(SkeinAdderListener { brandNumber ->
-            passThreads(binding.skeinSlider.value.toInt(), brandNumber)
+            skeinAdderViewModel.passThreads(brandNumber)
         })
 
         binding.skeinSelectorRecycler.adapter = adapter
+        binding.skeinSelectorRecycler.layoutManager = LinearLayoutManager(requireContext())
+        binding.skeinSelectorRecycler.setHasFixedSize(true)
+
+        adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onChanged() {
+                binding.skeinSelectorRecycler.scrollToPosition(0)
+            }
+
+            override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
+                binding.skeinSelectorRecycler.scrollToPosition(0)
+            }
+
+            override fun onItemRangeMoved(fromPosition: Int, toPosition: Int, itemCount: Int) {
+                binding.skeinSelectorRecycler.scrollToPosition(0)
+            }
+
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                binding.skeinSelectorRecycler.scrollToPosition(0)
+            }
+
+            override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
+                binding.skeinSelectorRecycler.scrollToPosition(0)
+            }
+
+            override fun onItemRangeChanged(positionStart: Int, itemCount: Int, payload: Any?) {
+                binding.skeinSelectorRecycler.scrollToPosition(0)
+            }
+        })
 
 
         skeinAdderViewModel.threads.observe(
@@ -63,33 +93,41 @@ class SkeinAdderFragment : Fragment() {
                 }
             })
 
+        binding.skeinStartInserter.onQueryTextChanged {
+            skeinAdderViewModel.searchQuery.value = it
+
+        }
 
 
-
-
+// was too high, i got up to renaming the filterSkeins enum even tho it's probably fine, can you think of anything better than filterskein
+        //or should we bit the lazy bullet and just reanme them all to filterskeinlist filterskeinchanger or somthing and filterskeinproject?
+        //hope this isent like 4 days later btw
 
         binding.skeinSlider.addOnChangeListener { slider, value, fromUser ->
             when (value.toInt()) {
                 0 -> {
-                    binding.skeinSeperator.isGone = false
-                    binding.skeinEndInserter.isGone = false
-                   // skeinAdderViewModel.getUnowned()
+                    binding.skeinSeperator.isGone = true
+                    binding.skeinEndInserter.isGone = true
+                    skeinAdderViewModel.filterSkeinOption.value = FilterSkeinOption.ADD_ONE
+
 
                 }
                 1 -> {
-                    binding.skeinSeperator.isGone = true
-                    binding.skeinEndInserter.isGone = true
-                    //  skeinAdderViewModel.getUnowned()
+
+
+                    binding.skeinSeperator.isGone = false
+                    binding.skeinEndInserter.isGone = false
+                    skeinAdderViewModel.filterSkeinOption.value = FilterSkeinOption.ADD_RANGE
                 }
                 2 -> {
                     binding.skeinSeperator.isGone = true
                     binding.skeinEndInserter.isGone = true
-                    //   skeinAdderViewModel.getOwned()
+                    skeinAdderViewModel.filterSkeinOption.value = FilterSkeinOption.REMOVE_ONE
                 }
                 3 -> {
                     binding.skeinSeperator.isGone = false
                     binding.skeinEndInserter.isGone = false
-                    //  skeinAdderViewModel.getOwned()
+                    skeinAdderViewModel.filterSkeinOption.value = FilterSkeinOption.REMOVE_RANGE
                 }
             }
         }
@@ -99,32 +137,6 @@ class SkeinAdderFragment : Fragment() {
 
 
         return binding.root
-    }
-
-    private fun passThreads(value: Int, brandNumber: String) {
-        when (value) {
-            0 -> {
-                skeinAdderViewModel.addThread(brandNumber)
-                Toast.makeText(context, "just added $brandNumber to database", Toast.LENGTH_LONG)
-                    .show()
-            }
-            1 -> {
-                skeinAdderViewModel.addThread(brandNumber)
-                Toast.makeText(context, "just added $brandNumber to database", Toast.LENGTH_LONG)
-                    .show()
-            }
-            2 -> {
-                //skeinAdderViewModel.removeThread(brandNumber)
-                Toast.makeText(context, "just removed $brandNumber to database", Toast.LENGTH_LONG)
-                    .show()
-            }
-            3 -> {
-                //   skeinAdderViewModel.removeThread(brandNumber)
-                Toast.makeText(context, "just removed $brandNumber to database", Toast.LENGTH_LONG)
-                    .show()
-            }
-        }
-
     }
 
 

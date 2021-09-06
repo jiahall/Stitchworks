@@ -1,46 +1,71 @@
 package android.jia.stitchworks.skeinadder
 
+import android.app.PendingIntent.getActivity
 import android.jia.stitchworks.database.Skein
 import android.jia.stitchworks.database.SkeinDatabaseDao
-import androidx.lifecycle.*
+import android.util.Log
+import android.widget.Toast
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 
 class SkeinAdderViewModel(dataSource: SkeinDatabaseDao) : ViewModel() {
 
     val database = dataSource
 
+
+    val searchQuery = MutableStateFlow("")
+    val filterSkeinOption = MutableStateFlow(FilterSkeinOption.ADD_ONE)
+
+
+    private val skeinFlow = combine(searchQuery, filterSkeinOption)
+    { query, filterSkeinOption -> Pair(query, filterSkeinOption) }
+        .flatMapLatest { (query, filterSkeinOption) ->
+            database.getSkeinsOptions(
+                query,
+                filterSkeinOption
+            )
+        }
+
     // Internally we use mutablelive data to update the list with live values
-    private val _threads = MutableLiveData<List<Skein>>()
+    private val _threads = skeinFlow
+
 
     //the external livedata threads is immutable, this is because we don't want it to be edited outside of the view model
     val threads: LiveData<List<Skein>>
-        //override the get function to return the list in _thread
-        get() = _threads
+        //overrid the get function to return the list in _thread
+        get() = _threads.asLiveData()
 
-    init {
-        getUnowned()
-    }
-
-
-    fun getUnowned() {
-        viewModelScope.launch {
-            _threads.value = database.getUnowned()
-        }
-    }
 
     fun addThread(brandNumber: String) {
         viewModelScope.launch {
             database.addThread(brandNumber)
-            _threads.value = database.getUnowned()
+
         }
 
     }
 
-    // fun removeThread(brandNumber: String) {
-    //    viewModelScope.launch {
-    //       database.removeThread(brandNumber)
-    //      _threads.value = database.getOwned()
-    // }
+    fun passThreads(brandNumber: String) {
+        when (filterSkeinOption.value) {
+            FilterSkeinOption.ADD_ONE -> addThread(brandNumber)
+            FilterSkeinOption.ADD_RANGE -> Log.i("SkeinAdderTest", "hi yeh this works too jia")
+            FilterSkeinOption.REMOVE_ONE -> removeThread(brandNumber)
+            FilterSkeinOption.REMOVE_RANGE -> Log.i("SkeinAdderTest", "yeh this works aswell")
+
+        }
+
+    }
+
+    fun removeThread(brandNumber: String) {
+        viewModelScope.launch {
+            database.removeThread(brandNumber)
+        }
+    }
 
     // }
 
@@ -61,3 +86,5 @@ class SkeinAdderViewModel(dataSource: SkeinDatabaseDao) : ViewModel() {
     // }
     // }
 }
+
+enum class FilterSkeinOption { ADD_ONE, ADD_RANGE, REMOVE_ONE, REMOVE_RANGE }

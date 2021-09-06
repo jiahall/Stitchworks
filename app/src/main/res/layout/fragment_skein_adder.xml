@@ -25,7 +25,8 @@
             app:layout_constraintEnd_toStartOf="@id/skein_end_inserter"
             app:layout_constraintHorizontal_weight="0.1"
             app:layout_constraintStart_toEndOf="@id/skein_start_inserter"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone" />
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/skein_start_inserter"
@@ -49,7 +50,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toEndOf="@+id/skein_seperator"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone" />
 
         <com.google.android.material.slider.Slider
             android:id="@+id/skein_slider"

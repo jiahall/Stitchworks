@@ -1,6 +1,7 @@
 package android.jia.stitchworks.database
 
 
+import android.jia.stitchworks.skeinadder.FilterSkeinOption
 import android.jia.stitchworks.skeinchecker.FilterSkein
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
@@ -16,6 +17,15 @@ interface SkeinDatabaseDao {
             else -> getOwned2()
         }
 
+    fun getSkeinsOptions(query: String, filterSkeinOption: FilterSkeinOption): Flow<List<Skein>> =
+        when (filterSkeinOption) {
+            FilterSkeinOption.ADD_RANGE -> getUnowned(query)
+            FilterSkeinOption.ADD_ONE -> getUnowned(query)
+            FilterSkeinOption.REMOVE_ONE -> getOwned(query)
+            FilterSkeinOption.REMOVE_RANGE -> getOwned(query)
+
+
+        }
 
     @Query("SELECT * FROM skein_checklist WHERE brandNumber LIKE '%' || :searchQuery || '%' OR thread_name LIKE '%' || :searchQuery || '%' ORDER BY skein_number ASC")
     fun getAll(searchQuery: String): Flow<List<Skein>>
@@ -61,5 +71,6 @@ interface SkeinDatabaseDao {
 
     @Query("UPDATE skein_checklist SET amount = 0 WHERE brandNumber = :brandNumber")
     suspend fun removeThread(brandNumber: String)
+
 
 }
