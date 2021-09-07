@@ -1,7 +1,9 @@
 package android.jia.stitchworks.skeinadder
 
 
+import android.jia.stitchworks.MainActivity
 import android.jia.stitchworks.R
+import android.jia.stitchworks.database.Skein
 import android.jia.stitchworks.database.SkeinDatabase
 import android.jia.stitchworks.databinding.FragmentSkeinAdderBinding
 import android.jia.stitchworks.onQueryTextChanged
@@ -24,16 +26,18 @@ class SkeinAdderFragment : Fragment() {
 
 
     private lateinit var skeinAdderViewModel: SkeinAdderViewModel
+    private lateinit var binding: FragmentSkeinAdderBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        val binding: FragmentSkeinAdderBinding = DataBindingUtil.inflate(
+        binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_skein_adder, container, false
         )
+
 
         val application = requireNotNull(this.activity).application
         val dataSource = SkeinDatabase.getInstance(application).skeinDatabaseDao
@@ -50,13 +54,15 @@ class SkeinAdderFragment : Fragment() {
         binding.lifecycleOwner = this
 
 
-        val adapter = SkeinAdderAdapter(SkeinAdderListener { brandNumber ->
-            skeinAdderViewModel.passThreads(brandNumber)
+        val adapter = SkeinAdderAdapter(SkeinAdderListener { Skein ->
+            check(Skein)
         })
 
         binding.skeinSelectorRecycler.adapter = adapter
         binding.skeinSelectorRecycler.layoutManager = LinearLayoutManager(requireContext())
         binding.skeinSelectorRecycler.setHasFixedSize(true)
+
+        binding.skeinStartInserter.requestFocus()
 
         adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
             override fun onChanged() {
@@ -98,10 +104,11 @@ class SkeinAdderFragment : Fragment() {
 
         }
 
+        binding.skeinEndInserter.onQueryTextChanged {
+            skeinAdderViewModel.searchQuery.value = it
 
-// was too high, i got up to renaming the filterSkeins enum even tho it's probably fine, can you think of anything better than filterskein
-        //or should we bit the lazy bullet and just reanme them all to filterskeinlist filterskeinchanger or somthing and filterskeinproject?
-        //hope this isent like 4 days later btw
+        }
+
 
         binding.skeinSlider.addOnChangeListener { slider, value, fromUser ->
             when (value.toInt()) {
@@ -139,5 +146,36 @@ class SkeinAdderFragment : Fragment() {
         return binding.root
     }
 
+    fun check(skein: Skein) {
+        binding.skeinStartInserter.setQuery("", false)
+        when (binding.skeinSlider.value.toInt()) {
 
+            0 -> skeinAdderViewModel.passThreads(skein)
+            1 -> if (binding.skeinStartInserter.hasFocus()) {
+                binding.skeinStartInserter.setQuery(skein.brandNumber, false)
+                skeinAdderViewModel.searchQuery.value = ""
+                binding.skeinEndInserter.requestFocus()
+
+            } else {
+                binding.skeinEndInserter.setQuery(skein.brandNumber, false)
+                skeinAdderViewModel.searchQuery.value = ""
+                binding.skeinStartInserter.requestFocus()
+
+            }
+
+            2 -> skeinAdderViewModel.passThreads(skein)
+
+            3 -> if (binding.skeinStartInserter.hasFocus()) {
+                binding.skeinStartInserter.setQuery(skein.brandNumber, false)
+                skeinAdderViewModel.searchQuery.value = ""
+                binding.skeinEndInserter.requestFocus()
+
+            } else {
+                binding.skeinEndInserter.setQuery(skein.brandNumber, false)
+                skeinAdderViewModel.searchQuery.value = ""
+                binding.skeinStartInserter.requestFocus()
+            }
+        }
+
+    }
 }

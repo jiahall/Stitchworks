@@ -50,11 +50,11 @@ class SkeinAdderViewModel(dataSource: SkeinDatabaseDao) : ViewModel() {
 
     }
 
-    fun passThreads(brandNumber: String) {
+    fun passThreads(skein: Skein) {
         when (filterSkeinOption.value) {
-            FilterSkeinOption.ADD_ONE -> addThread(brandNumber)
+            FilterSkeinOption.ADD_ONE -> addThread(skein.brandNumber)
             FilterSkeinOption.ADD_RANGE -> Log.i("SkeinAdderTest", "hi yeh this works too jia")
-            FilterSkeinOption.REMOVE_ONE -> removeThread(brandNumber)
+            FilterSkeinOption.REMOVE_ONE -> removeThread(skein.brandNumber)
             FilterSkeinOption.REMOVE_RANGE -> Log.i("SkeinAdderTest", "yeh this works aswell")
 
         }

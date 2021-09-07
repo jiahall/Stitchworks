@@ -73,10 +73,10 @@ class ViewHolder private constructor(val binding: ListItemSmallSkeinBinding) :
     }
 }
 
-class SkeinAdderListener(val clickListener: (BrandNumber: String) -> Unit) {
+class SkeinAdderListener(val clickListener: (Skein: Skein) -> Unit) {
 
 
-    fun onClick(skein: Skein) = clickListener(skein.brandNumber)
+    fun onClick(skein: Skein) = clickListener(skein)
 
 
 }

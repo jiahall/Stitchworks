@@ -20,7 +20,6 @@
             android:id="@+id/skein_seperator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="8dp"
             android:text="-"
             app:layout_constraintEnd_toStartOf="@id/skein_end_inserter"
             app:layout_constraintHorizontal_weight="0.1"

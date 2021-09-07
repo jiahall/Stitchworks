@@ -23,7 +23,6 @@ data class Skein(
 
       @ColumnInfo(name = "colour_value")
       val colourValue: String,
-    //gotta change that to hexColour
 
       @ColumnInfo(name="amount")
       var amountOfSkeins: Int,
