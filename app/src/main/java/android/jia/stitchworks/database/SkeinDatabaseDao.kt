@@ -69,8 +69,14 @@ interface SkeinDatabaseDao {
     @Query("UPDATE skein_checklist SET amount = 1 WHERE brandNumber = :brandNumber")
     suspend fun addThread(brandNumber: String)
 
+    @Query("UPDATE skein_checklist SET amount = 1 WHERE skein_number BETWEEN :skeinNumber AND :skeinNumber1")
+    suspend fun addThreadRange(skeinNumber: Int, skeinNumber1: Int)
+
     @Query("UPDATE skein_checklist SET amount = 0 WHERE brandNumber = :brandNumber")
     suspend fun removeThread(brandNumber: String)
+
+    @Query("UPDATE skein_checklist SET amount = 0 WHERE skein_number BETWEEN :skeinNumber AND :skeinNumber1")
+    suspend fun removeThreadRange(skeinNumber: Int, skeinNumber1: Int)
 
 
 }

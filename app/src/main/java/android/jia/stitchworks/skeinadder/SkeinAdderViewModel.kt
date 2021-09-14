@@ -53,12 +53,22 @@ class SkeinAdderViewModel(dataSource: SkeinDatabaseDao) : ViewModel() {
     fun passThreads(skein: Skein) {
         when (filterSkeinOption.value) {
             FilterSkeinOption.ADD_ONE -> addThread(skein.brandNumber)
-            FilterSkeinOption.ADD_RANGE -> Log.i("SkeinAdderTest", "hi yeh this works too jia")
+            FilterSkeinOption.ADD_RANGE -> Log.i("SkeinAdderTest", "yeh this works aswell")
             FilterSkeinOption.REMOVE_ONE -> removeThread(skein.brandNumber)
             FilterSkeinOption.REMOVE_RANGE -> Log.i("SkeinAdderTest", "yeh this works aswell")
 
         }
 
+    }
+
+    fun addRange(skeinNumber: Int?, skeinNumber1: Int?) {
+        viewModelScope.launch {
+            if (skeinNumber != null) {
+                if (skeinNumber1 != null) {
+                    database.addThreadRange(skeinNumber, skeinNumber1)
+                }
+            }
+        }
     }
 
     fun removeThread(brandNumber: String) {
@@ -67,6 +77,34 @@ class SkeinAdderViewModel(dataSource: SkeinDatabaseDao) : ViewModel() {
         }
     }
 
+    fun removeRange(skeinNumber: Int?, skeinNumber1: Int?) {
+        viewModelScope.launch {
+            if (skeinNumber != null) {
+                if (skeinNumber1 != null) {
+                    database.removeThreadRange(skeinNumber, skeinNumber1)
+                }
+            }
+        }
+    }
+
+    fun onSubmit() {
+        when (filterSkeinOption.value) {
+
+            FilterSkeinOption.ADD_RANGE -> addRange(
+                startSkein.value?.skeinNumber,
+                endSkein.value?.skeinNumber
+            )
+
+            FilterSkeinOption.REMOVE_RANGE -> removeRange(
+                startSkein.value?.skeinNumber,
+                endSkein.value?.skeinNumber
+            )
+
+            else -> Log.i("SkeinAdderTest", "yeh this works aswell")
+        }
+
+
+    }
     // }
 
     // fun searchDatabase(value: Int, query: String): LiveData<List<Skein>> {
@@ -86,5 +124,6 @@ class SkeinAdderViewModel(dataSource: SkeinDatabaseDao) : ViewModel() {
     // }
     // }
 }
+
 
 enum class FilterSkeinOption { ADD_ONE, ADD_RANGE, REMOVE_ONE, REMOVE_RANGE }
