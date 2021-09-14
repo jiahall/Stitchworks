@@ -16,16 +16,6 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="50dp">
 
-        <TextView
-            android:id="@+id/skein_seperator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="-"
-            app:layout_constraintEnd_toStartOf="@id/skein_end_inserter"
-            app:layout_constraintHorizontal_weight="0.1"
-            app:layout_constraintStart_toEndOf="@id/skein_start_inserter"
-            app:layout_constraintTop_toTopOf="parent"
-            android:visibility="gone" />
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/skein_start_inserter"
@@ -38,6 +28,30 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/start_Skein_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            app:iconifiedByDefault="false"
+            android:text="@{skeinAdderViewModel.startSkein.brandNumber}"
+            app:layout_constraintEnd_toStartOf="@+id/skein_seperator"
+            app:layout_constraintHorizontal_weight="0.5"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/skein_seperator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-"
+            app:layout_constraintEnd_toStartOf="@id/skein_end_inserter"
+            app:layout_constraintHorizontal_weight="0.1"
+
+            app:layout_constraintStart_toEndOf="@id/skein_start_inserter"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone" />
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/skein_end_inserter"
@@ -47,7 +61,19 @@
             android:ems="10"
             app:iconifiedByDefault="false"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintHorizontal_weight="0.5"
+            app:layout_constraintStart_toEndOf="@+id/skein_seperator"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/skein_end_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="0.5"
+            android:text="@{skeinAdderViewModel.endSkein.brandNumber}"
             app:layout_constraintStart_toEndOf="@+id/skein_seperator"
             app:layout_constraintTop_toTopOf="parent"
             android:visibility="gone" />

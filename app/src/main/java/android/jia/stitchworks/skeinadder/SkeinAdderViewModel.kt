@@ -5,10 +5,7 @@ import android.jia.stitchworks.database.Skein
 import android.jia.stitchworks.database.SkeinDatabaseDao
 import android.util.Log
 import android.widget.Toast
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
@@ -18,6 +15,8 @@ class SkeinAdderViewModel(dataSource: SkeinDatabaseDao) : ViewModel() {
 
     val database = dataSource
 
+    var startSkein = MutableLiveData<Skein?>()
+    val endSkein = MutableLiveData<Skein?>()
 
     val searchQuery = MutableStateFlow("")
     val filterSkeinOption = MutableStateFlow(FilterSkeinOption.ADD_ONE)
@@ -43,6 +42,7 @@ class SkeinAdderViewModel(dataSource: SkeinDatabaseDao) : ViewModel() {
 
 
     fun addThread(brandNumber: String) {
+
         viewModelScope.launch {
             database.addThread(brandNumber)
 

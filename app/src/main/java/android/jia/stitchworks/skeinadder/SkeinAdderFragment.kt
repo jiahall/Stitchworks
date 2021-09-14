@@ -151,13 +151,19 @@ class SkeinAdderFragment : Fragment() {
         when (binding.skeinSlider.value.toInt()) {
 
             0 -> skeinAdderViewModel.passThreads(skein)
+
             1 -> if (binding.skeinStartInserter.hasFocus()) {
-                binding.skeinStartInserter.setQuery(skein.brandNumber, false)
+                skeinAdderViewModel.startSkein.value = skein
+                binding.startSkeinTextView.isGone = false
+                binding.skeinStartInserter.isGone = true
+
                 skeinAdderViewModel.searchQuery.value = ""
                 binding.skeinEndInserter.requestFocus()
 
             } else {
-                binding.skeinEndInserter.setQuery(skein.brandNumber, false)
+                skeinAdderViewModel.endSkein.value = skein
+                binding.skeinEndTextView.isGone = false
+                binding.skeinEndInserter.isGone = true
                 skeinAdderViewModel.searchQuery.value = ""
                 binding.skeinStartInserter.requestFocus()
 
