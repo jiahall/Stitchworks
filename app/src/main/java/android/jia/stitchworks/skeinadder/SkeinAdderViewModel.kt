@@ -105,22 +105,28 @@ class SkeinAdderViewModel(dataSource: SkeinDatabaseDao) : ViewModel() {
         if (startSkein.value == null || endSkein.value == null) {
             _submitMessage.value = true
         } else {
+            val higher: Int
+            val lower: Int
+
+            if (startSkein.value!!.skeinNumber >= endSkein.value!!.skeinNumber) {
+                higher = startSkein.value!!.skeinNumber
+                lower = endSkein.value!!.skeinNumber
+
+            } else {
+                higher = endSkein.value!!.skeinNumber
+                lower = startSkein.value!!.skeinNumber
+            }
+
+
             when (filterSkeinOption.value) {
 
-
                 FilterSkeinOption.ADD_RANGE -> {
-                    addRange(
-                        startSkein.value?.skeinNumber,
-                        endSkein.value?.skeinNumber
-                    )
+                    addRange(lower, higher)
                     _clearThreads.value = true
                 }
 
                 FilterSkeinOption.REMOVE_RANGE -> {
-                    removeRange(
-                        startSkein.value?.skeinNumber,
-                        endSkein.value?.skeinNumber
-                    )
+                    removeRange(lower, higher)
                     _clearThreads.value = true
                 }
 

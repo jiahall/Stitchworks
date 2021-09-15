@@ -23,7 +23,7 @@
         app:cardBackgroundColor="#81C784"
         app:cardCornerRadius="12dp"
         app:cardElevation="3dp"
-        app:contentPadding="4dp"
+
         android:onClick="@{()-> clickListener.onClick(skein)}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
