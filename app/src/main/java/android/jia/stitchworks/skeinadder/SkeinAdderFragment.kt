@@ -109,6 +109,14 @@ class SkeinAdderFragment : Fragment() {
             viewLifecycleOwner,
             Observer { hasThreads -> if (hasThreads) clear() })
 
+        skeinAdderViewModel.clearStartQuery.observe(
+            viewLifecycleOwner,
+            Observer { hasQuery -> if (hasQuery) clearQuery(1) })
+
+        skeinAdderViewModel.clearEndQuery.observe(
+            viewLifecycleOwner,
+            Observer { hasQuery -> if (hasQuery) clearQuery(2) })
+
         binding.skeinStartInserter.onQueryTextChanged {
             skeinAdderViewModel.searchQuery.value = it
 
@@ -157,6 +165,24 @@ class SkeinAdderFragment : Fragment() {
         return binding.root
     }
 
+    private fun clearQuery(query: Int) {
+        if (query == 1) {
+            binding.startSkeinTextView.isGone = true
+            skeinAdderViewModel.startSkein.value = null
+            binding.skeinStartInserter.isGone = false
+            binding.skeinStartInserter.setQuery("", false)
+            binding.skeinStartInserter.requestFocus()
+
+        } else {
+
+            binding.skeinEndTextView.isGone = true
+            skeinAdderViewModel.endSkein.value = null
+            binding.skeinEndInserter.isGone = false
+            binding.skeinEndInserter.setQuery("", false)
+            binding.skeinEndInserter.requestFocus()
+        }
+    }
+
     private fun showError() {
         Toast.makeText(
             context, "Error, please fill in both searchbars", Toast.LENGTH_SHORT
@@ -165,6 +191,7 @@ class SkeinAdderFragment : Fragment() {
     }
 
     private fun skeinSliderClear() {
+        //this fires after the slider changes value making sure all values are null and empty
         binding.startSkeinTextView.isGone = true
         binding.skeinEndTextView.isGone = true
         skeinAdderViewModel.startSkein.value = null
@@ -175,7 +202,7 @@ class SkeinAdderFragment : Fragment() {
     }
 
     fun clear() {
-        //jia put this in an observer and have a boolean that when set to true this fires off and resets that boolean to false
+        //this fires after the submit button is pressed, resetting both searchbars
         binding.skeinStartInserter.isGone = false
         binding.skeinSeperator.isGone = false
         binding.skeinEndInserter.isGone = false

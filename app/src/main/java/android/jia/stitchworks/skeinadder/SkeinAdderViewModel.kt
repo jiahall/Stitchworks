@@ -47,6 +47,14 @@ class SkeinAdderViewModel(dataSource: SkeinDatabaseDao) : ViewModel() {
     val clearThreads: LiveData<Boolean>
         get() = _clearThreads
 
+    private val _clearStartQuery = MutableLiveData<Boolean>()
+    val clearStartQuery: LiveData<Boolean>
+        get() = _clearStartQuery
+
+    private val _clearEndQuery = MutableLiveData<Boolean>()
+    val clearEndQuery: LiveData<Boolean>
+        get() = _clearEndQuery
+
 
     fun addThread(brandNumber: String) {
 
@@ -128,6 +136,16 @@ class SkeinAdderViewModel(dataSource: SkeinDatabaseDao) : ViewModel() {
 
     fun resetClearThreads() {
         _clearThreads.value = false
+    }
+
+    fun resetQuery(query: Int) {
+        if (query.equals(1)) {
+            _clearStartQuery.value = true
+            _clearStartQuery.value = false
+        } else {
+            _clearEndQuery.value = true
+            _clearEndQuery.value = false
+        }
     }
     // }
 
