@@ -17,6 +17,7 @@ import androidx.core.view.isGone
 import androidx.core.view.size
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -99,6 +100,15 @@ class SkeinAdderFragment : Fragment() {
                 }
             })
 
+        skeinAdderViewModel.submitMessage.observe(viewLifecycleOwner, Observer { hasError ->
+            if (hasError)
+                showError()
+        })
+
+        skeinAdderViewModel.clearThreads.observe(
+            viewLifecycleOwner,
+            Observer { hasThreads -> if (hasThreads) clear() })
+
         binding.skeinStartInserter.onQueryTextChanged {
             skeinAdderViewModel.searchQuery.value = it
 
@@ -111,29 +121,30 @@ class SkeinAdderFragment : Fragment() {
 
 
         binding.skeinSlider.addOnChangeListener { slider, value, fromUser ->
+            //JIA YOU gotta set each of these to make sure everything is correct on change(all empty right stuff is hidden) submit button unclickable
             when (value.toInt()) {
                 0 -> {
                     binding.skeinSeperator.isGone = true
                     binding.skeinEndInserter.isGone = true
+                    skeinSliderClear()
                     skeinAdderViewModel.filterSkeinOption.value = FilterSkeinOption.ADD_ONE
-
-
                 }
                 1 -> {
-
-
                     binding.skeinSeperator.isGone = false
                     binding.skeinEndInserter.isGone = false
+                    skeinSliderClear()
                     skeinAdderViewModel.filterSkeinOption.value = FilterSkeinOption.ADD_RANGE
                 }
                 2 -> {
                     binding.skeinSeperator.isGone = true
                     binding.skeinEndInserter.isGone = true
+                    skeinSliderClear()
                     skeinAdderViewModel.filterSkeinOption.value = FilterSkeinOption.REMOVE_ONE
                 }
                 3 -> {
                     binding.skeinSeperator.isGone = false
                     binding.skeinEndInserter.isGone = false
+                    skeinSliderClear()
                     skeinAdderViewModel.filterSkeinOption.value = FilterSkeinOption.REMOVE_RANGE
                 }
             }
@@ -144,6 +155,38 @@ class SkeinAdderFragment : Fragment() {
 
 
         return binding.root
+    }
+
+    private fun showError() {
+        Toast.makeText(
+            context, "Error, please fill in both searchbars", Toast.LENGTH_SHORT
+        ).show()
+        skeinAdderViewModel.resetSubmitMessage()
+    }
+
+    private fun skeinSliderClear() {
+        binding.startSkeinTextView.isGone = true
+        binding.skeinEndTextView.isGone = true
+        skeinAdderViewModel.startSkein.value = null
+        skeinAdderViewModel.endSkein.value = null
+        binding.skeinStartInserter.isGone = false
+        binding.skeinStartInserter.setQuery("", false)
+        binding.skeinEndInserter.setQuery("", false)
+    }
+
+    fun clear() {
+        //jia put this in an observer and have a boolean that when set to true this fires off and resets that boolean to false
+        binding.skeinStartInserter.isGone = false
+        binding.skeinSeperator.isGone = false
+        binding.skeinEndInserter.isGone = false
+        binding.startSkeinTextView.isGone = true
+        binding.skeinEndTextView.isGone = true
+        binding.skeinStartInserter.setQuery("", false)
+        binding.skeinEndInserter.setQuery("", false)
+        skeinAdderViewModel.startSkein.value = null
+        skeinAdderViewModel.endSkein.value = null
+        skeinAdderViewModel.resetClearThreads()
+
     }
 
     fun check(skein: Skein) {
@@ -172,14 +215,20 @@ class SkeinAdderFragment : Fragment() {
             2 -> skeinAdderViewModel.passThreads(skein)
 
             3 -> if (binding.skeinStartInserter.hasFocus()) {
-                binding.skeinStartInserter.setQuery(skein.brandNumber, false)
+                skeinAdderViewModel.startSkein.value = skein
+                binding.startSkeinTextView.isGone = false
+                binding.skeinStartInserter.isGone = true
+
                 skeinAdderViewModel.searchQuery.value = ""
                 binding.skeinEndInserter.requestFocus()
 
             } else {
-                binding.skeinEndInserter.setQuery(skein.brandNumber, false)
+                skeinAdderViewModel.endSkein.value = skein
+                binding.skeinEndTextView.isGone = false
+                binding.skeinEndInserter.isGone = true
                 skeinAdderViewModel.searchQuery.value = ""
                 binding.skeinStartInserter.requestFocus()
+
             }
         }
 

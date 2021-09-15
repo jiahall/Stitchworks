@@ -34,11 +34,18 @@ class SkeinAdderViewModel(dataSource: SkeinDatabaseDao) : ViewModel() {
     // Internally we use mutablelive data to update the list with live values
     private val _threads = skeinFlow
 
-
     //the external livedata threads is immutable, this is because we don't want it to be edited outside of the view model
     val threads: LiveData<List<Skein>>
         //overrid the get function to return the list in _thread
         get() = _threads.asLiveData()
+
+    private val _submitMessage = MutableLiveData<Boolean>()
+    val submitMessage: LiveData<Boolean>
+        get() = _submitMessage
+
+    private val _clearThreads = MutableLiveData<Boolean>()
+    val clearThreads: LiveData<Boolean>
+        get() = _clearThreads
 
 
     fun addThread(brandNumber: String) {
@@ -53,10 +60,9 @@ class SkeinAdderViewModel(dataSource: SkeinDatabaseDao) : ViewModel() {
     fun passThreads(skein: Skein) {
         when (filterSkeinOption.value) {
             FilterSkeinOption.ADD_ONE -> addThread(skein.brandNumber)
-            FilterSkeinOption.ADD_RANGE -> Log.i("SkeinAdderTest", "yeh this works aswell")
             FilterSkeinOption.REMOVE_ONE -> removeThread(skein.brandNumber)
-            FilterSkeinOption.REMOVE_RANGE -> Log.i("SkeinAdderTest", "yeh this works aswell")
 
+            else -> throw IllegalStateException("Invalid skein param value")
         }
 
     }
@@ -88,22 +94,40 @@ class SkeinAdderViewModel(dataSource: SkeinDatabaseDao) : ViewModel() {
     }
 
     fun onSubmit() {
-        when (filterSkeinOption.value) {
+        if (startSkein.value == null || endSkein.value == null) {
+            _submitMessage.value = true
+        } else {
+            when (filterSkeinOption.value) {
 
-            FilterSkeinOption.ADD_RANGE -> addRange(
-                startSkein.value?.skeinNumber,
-                endSkein.value?.skeinNumber
-            )
 
-            FilterSkeinOption.REMOVE_RANGE -> removeRange(
-                startSkein.value?.skeinNumber,
-                endSkein.value?.skeinNumber
-            )
+                FilterSkeinOption.ADD_RANGE -> {
+                    addRange(
+                        startSkein.value?.skeinNumber,
+                        endSkein.value?.skeinNumber
+                    )
+                    _clearThreads.value = true
+                }
 
-            else -> Log.i("SkeinAdderTest", "yeh this works aswell")
+                FilterSkeinOption.REMOVE_RANGE -> {
+                    removeRange(
+                        startSkein.value?.skeinNumber,
+                        endSkein.value?.skeinNumber
+                    )
+                    _clearThreads.value = true
+                }
+
+                else -> throw IllegalStateException("Invalid rating param value")
+            }
+
         }
+    }
 
+    fun resetSubmitMessage() {
+        _submitMessage.value = false
+    }
 
+    fun resetClearThreads() {
+        _clearThreads.value = false
     }
     // }
 
