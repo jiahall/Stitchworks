@@ -129,7 +129,6 @@ class SkeinAdderFragment : Fragment() {
 
 
         binding.skeinSlider.addOnChangeListener { slider, value, fromUser ->
-            //JIA YOU gotta set each of these to make sure everything is correct on change(all empty right stuff is hidden) submit button unclickable
             when (value.toInt()) {
                 0 -> {
                     binding.skeinSeperator.isGone = true
@@ -174,7 +173,6 @@ class SkeinAdderFragment : Fragment() {
             binding.skeinStartInserter.requestFocus()
 
         } else {
-
             binding.skeinEndTextView.isGone = true
             skeinAdderViewModel.endSkein.value = null
             binding.skeinEndInserter.isGone = false
