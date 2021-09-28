@@ -13,16 +13,18 @@ import android.widget.SearchView
 import android.widget.Toast
 
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.*
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SkeinCheckerFragment : Fragment() {
 
-
-    //these are here so i can talk to vm outside of onCreate
-    private lateinit var skeinCheckerViewModel: SkeinCheckerViewModel
+    private val skeinCheckerViewModel by activityViewModels<SkeinCheckerViewModel>()
 
 
     override fun onCreateView(
@@ -35,17 +37,6 @@ class SkeinCheckerFragment : Fragment() {
             inflater,
             R.layout.fragment_skein_checker, container, false
         )
-
-        val application = requireNotNull(this.activity).application
-
-
-        val dataSource = SkeinDatabase.getInstance(application).skeinDatabaseDao
-        val viewModelFactory = SkeinCheckerViewModelFactory(dataSource)
-
-
-        skeinCheckerViewModel =
-            ViewModelProvider(this, viewModelFactory)
-                .get(SkeinCheckerViewModel::class.java)
 
         binding.skeinCheckerViewModel = skeinCheckerViewModel
 
@@ -88,8 +79,7 @@ class SkeinCheckerFragment : Fragment() {
         })
 
         skeinCheckerViewModel.threads.observe(
-            viewLifecycleOwner,
-            Observer { it?.let { adapter.submitList(it) } })
+            viewLifecycleOwner, { it?.let { adapter.submitList(it) } })
 
 
         binding.searchView.queryHint = "hello, type here"

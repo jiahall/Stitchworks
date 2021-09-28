@@ -8,6 +8,7 @@ import android.jia.stitchworks.database.SkeinDatabase
 import android.jia.stitchworks.databinding.FragmentSkeinAdderBinding
 import android.jia.stitchworks.onQueryTextChanged
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,16 +18,22 @@ import androidx.core.view.isGone
 import androidx.core.view.size
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SkeinAdderFragment : Fragment() {
 
 
-    private lateinit var skeinAdderViewModel: SkeinAdderViewModel
+    private val skeinAdderViewModel by activityViewModels<SkeinAdderViewModel>()
+
+    //private lateinit var skeinAdderViewModel: SkeinAdderViewModel
     private lateinit var binding: FragmentSkeinAdderBinding
 
     override fun onCreateView(
@@ -40,14 +47,13 @@ class SkeinAdderFragment : Fragment() {
         )
 
 
-        val application = requireNotNull(this.activity).application
-        val dataSource = SkeinDatabase.getInstance(application).skeinDatabaseDao
-        val viewModelFactory = SkeinAdderViewModelFactory(dataSource)
+        //val application = requireNotNull(this.activity).application
+        // val dataSource = SkeinDatabase.getInstance(application).skeinDatabaseDao
+        //val viewModelFactory = SkeinAdderViewModelFactory(dataSource)
 
-        skeinAdderViewModel =
-            ViewModelProvider(this, viewModelFactory)
-                .get(SkeinAdderViewModel::class.java)
-
+        // skeinAdderViewModel =
+        //    ViewModelProvider(this, viewModelFactory)
+        //      .get(SkeinAdderViewModel::class.java)
 
 
         binding.skeinAdderViewModel = skeinAdderViewModel
@@ -135,12 +141,14 @@ class SkeinAdderFragment : Fragment() {
                     binding.skeinEndInserter.isGone = true
                     skeinSliderClear()
                     skeinAdderViewModel.filterSkeinOption.value = FilterSkeinOption.ADD_ONE
+
                 }
                 1 -> {
                     binding.skeinSeperator.isGone = false
                     binding.skeinEndInserter.isGone = false
                     skeinSliderClear()
                     skeinAdderViewModel.filterSkeinOption.value = FilterSkeinOption.ADD_RANGE
+                    Log.i("zoopfragment", "it's ${skeinAdderViewModel.filterSkeinOption.value}")
                 }
                 2 -> {
                     binding.skeinSeperator.isGone = true
@@ -218,10 +226,16 @@ class SkeinAdderFragment : Fragment() {
         binding.skeinStartInserter.setQuery("", false)
         when (binding.skeinSlider.value.toInt()) {
 
-            0 -> skeinAdderViewModel.passThreads(skein)
+            0 -> {
+                skeinAdderViewModel.passThreads(skein)
+            }
 
             1 -> if (binding.skeinStartInserter.hasFocus()) {
                 skeinAdderViewModel.startSkein.value = skein
+                Log.i(
+                    "zoopfragment",
+                    "start skein is ${skeinAdderViewModel.startSkein.value!!.brandNumber}"
+                )
                 binding.startSkeinTextView.isGone = false
                 binding.skeinStartInserter.isGone = true
 
@@ -230,6 +244,10 @@ class SkeinAdderFragment : Fragment() {
 
             } else {
                 skeinAdderViewModel.endSkein.value = skein
+                Log.i(
+                    "zoopfragment",
+                    "start end is ${skeinAdderViewModel.endSkein.value!!.brandNumber}"
+                )
                 binding.skeinEndTextView.isGone = false
                 binding.skeinEndInserter.isGone = true
                 skeinAdderViewModel.searchQuery.value = ""

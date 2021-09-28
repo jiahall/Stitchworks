@@ -6,17 +6,21 @@ import android.jia.stitchworks.database.SkeinDatabaseDao
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SkeinAdderViewModel(dataSource: SkeinDatabaseDao) : ViewModel() {
+@HiltViewModel
+class SkeinAdderViewModel @Inject internal constructor(
+    private val dataSource: SkeinDatabaseDao
+) : ViewModel() {
 
-    val database = dataSource
 
     var startSkein = MutableLiveData<Skein?>()
-    val endSkein = MutableLiveData<Skein?>()
+    var endSkein = MutableLiveData<Skein?>()
 
     val searchQuery = MutableStateFlow("")
     val filterSkeinOption = MutableStateFlow(FilterSkeinOption.ADD_ONE)
@@ -25,7 +29,7 @@ class SkeinAdderViewModel(dataSource: SkeinDatabaseDao) : ViewModel() {
     private val skeinFlow = combine(searchQuery, filterSkeinOption)
     { query, filterSkeinOption -> Pair(query, filterSkeinOption) }
         .flatMapLatest { (query, filterSkeinOption) ->
-            database.getSkeinsOptions(
+            dataSource.getSkeinsOptions(
                 query,
                 filterSkeinOption
             )
@@ -56,21 +60,24 @@ class SkeinAdderViewModel(dataSource: SkeinDatabaseDao) : ViewModel() {
         get() = _clearEndQuery
 
 
-    fun addThread(brandNumber: String) {
+    fun passThreads(skein: Skein) {
+        when (filterSkeinOption.value) {
+            FilterSkeinOption.ADD_ONE -> {
+                addThread(skein.brandNumber)
+            }
+            FilterSkeinOption.REMOVE_ONE -> removeThread(skein.brandNumber)
 
-        viewModelScope.launch {
-            database.addThread(brandNumber)
-
+            else -> throw IllegalStateException("Invalid skein param value")
         }
 
     }
 
-    fun passThreads(skein: Skein) {
-        when (filterSkeinOption.value) {
-            FilterSkeinOption.ADD_ONE -> addThread(skein.brandNumber)
-            FilterSkeinOption.REMOVE_ONE -> removeThread(skein.brandNumber)
+    fun addThread(brandNumber: String) {
 
-            else -> throw IllegalStateException("Invalid skein param value")
+        viewModelScope.launch {
+
+            dataSource.addThread(brandNumber)
+
         }
 
     }
@@ -79,7 +86,7 @@ class SkeinAdderViewModel(dataSource: SkeinDatabaseDao) : ViewModel() {
         viewModelScope.launch {
             if (skeinNumber != null) {
                 if (skeinNumber1 != null) {
-                    database.addThreadRange(skeinNumber, skeinNumber1)
+                    dataSource.addThreadRange(skeinNumber, skeinNumber1)
                 }
             }
         }
@@ -87,7 +94,7 @@ class SkeinAdderViewModel(dataSource: SkeinDatabaseDao) : ViewModel() {
 
     fun removeThread(brandNumber: String) {
         viewModelScope.launch {
-            database.removeThread(brandNumber)
+            dataSource.removeThread(brandNumber)
         }
     }
 
@@ -95,13 +102,14 @@ class SkeinAdderViewModel(dataSource: SkeinDatabaseDao) : ViewModel() {
         viewModelScope.launch {
             if (skeinNumber != null) {
                 if (skeinNumber1 != null) {
-                    database.removeThreadRange(skeinNumber, skeinNumber1)
+                    dataSource.removeThreadRange(skeinNumber, skeinNumber1)
                 }
             }
         }
     }
 
     fun onSubmit() {
+
         if (startSkein.value == null || endSkein.value == null) {
             _submitMessage.value = true
         } else {

@@ -4,21 +4,24 @@ import android.app.Application
 import android.jia.stitchworks.database.Skein
 import android.jia.stitchworks.database.SkeinDatabaseDao
 import androidx.lifecycle.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flatMapLatest
+import javax.inject.Inject
 
-class SkeinCheckerViewModel(dataSource: SkeinDatabaseDao) : ViewModel() {
+@HiltViewModel
+class SkeinCheckerViewModel @Inject internal constructor(private val dataSource: SkeinDatabaseDao) :
+    ViewModel() {
 
-    val database = dataSource
 
     val searchQuery = MutableStateFlow("")
     val filterSkein = MutableStateFlow(FilterSkein.BY_ALL)
 
     private val skeinFlow = combine(searchQuery, filterSkein)
     { query, filterSkein -> Pair(query, filterSkein) }
-        .flatMapLatest { (query, filterSkein) -> database.getSkeins(query, filterSkein) }
+        .flatMapLatest { (query, filterSkein) -> dataSource.getSkeins(query, filterSkein) }
 
     // Internally we use mutablelive data to update the list with live values
     private val _threads = skeinFlow
