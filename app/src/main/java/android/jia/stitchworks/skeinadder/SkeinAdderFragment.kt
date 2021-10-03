@@ -15,6 +15,7 @@ import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.core.view.size
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -98,9 +99,10 @@ class SkeinAdderFragment : Fragment() {
         })
 
 
+
         skeinAdderViewModel.threads.observe(
             viewLifecycleOwner,
-            Observer {
+            {
                 it?.let {
                     adapter.submitList(it)
                 }
@@ -109,6 +111,10 @@ class SkeinAdderFragment : Fragment() {
         skeinAdderViewModel.submitMessage.observe(viewLifecycleOwner, Observer { hasError ->
             if (hasError)
                 showError()
+        })
+
+        skeinAdderViewModel.undoList.observe(viewLifecycleOwner, {
+            binding.undoButton.isEnabled = skeinAdderViewModel.undoList.value?.isNotEmpty() == true
         })
 
         skeinAdderViewModel.clearThreads.observe(
@@ -148,7 +154,7 @@ class SkeinAdderFragment : Fragment() {
                     binding.skeinEndInserter.isGone = false
                     skeinSliderClear()
                     skeinAdderViewModel.filterSkeinOption.value = FilterSkeinOption.ADD_RANGE
-                    Log.i("zoopfragment", "it's ${skeinAdderViewModel.filterSkeinOption.value}")
+
                 }
                 2 -> {
                     binding.skeinSeperator.isGone = true
@@ -232,10 +238,7 @@ class SkeinAdderFragment : Fragment() {
 
             1 -> if (binding.skeinStartInserter.hasFocus()) {
                 skeinAdderViewModel.startSkein.value = skein
-                Log.i(
-                    "zoopfragment",
-                    "start skein is ${skeinAdderViewModel.startSkein.value!!.brandNumber}"
-                )
+
                 binding.startSkeinTextView.isGone = false
                 binding.skeinStartInserter.isGone = true
 
@@ -244,10 +247,7 @@ class SkeinAdderFragment : Fragment() {
 
             } else {
                 skeinAdderViewModel.endSkein.value = skein
-                Log.i(
-                    "zoopfragment",
-                    "start end is ${skeinAdderViewModel.endSkein.value!!.brandNumber}"
-                )
+
                 binding.skeinEndTextView.isGone = false
                 binding.skeinEndInserter.isGone = true
                 skeinAdderViewModel.searchQuery.value = ""

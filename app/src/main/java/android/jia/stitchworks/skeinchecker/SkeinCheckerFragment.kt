@@ -1,24 +1,20 @@
 package android.jia.stitchworks.skeinchecker
 
-import androidx.lifecycle.ViewModelProvider
-import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.jia.stitchworks.R
-import android.jia.stitchworks.database.SkeinDatabase
 import android.jia.stitchworks.databinding.FragmentSkeinCheckerBinding
 import android.jia.stitchworks.onQueryTextChanged
-import android.view.*
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.MenuInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.PopupMenu
-import android.widget.SearchView
 import android.widget.Toast
-
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -45,7 +41,7 @@ class SkeinCheckerFragment : Fragment() {
         binding.lifecycleOwner = this
 
         val adapter = SkeinCheckerAdapter(SkeinCheckerListener { brandNumber ->
-            Toast.makeText(context, "${brandNumber}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "$brandNumber", Toast.LENGTH_SHORT).show()
         })
         binding.skeinList.adapter = adapter
         binding.skeinList.layoutManager = LinearLayoutManager(requireContext())
