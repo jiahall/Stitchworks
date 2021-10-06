@@ -1,4 +1,4 @@
-package android.jia.stitchworks.database
+package android.jia.stitchworks.data
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

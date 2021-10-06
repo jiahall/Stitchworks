@@ -1,8 +1,8 @@
 package android.jia.stitchworks
 
 import android.content.Context
-import android.jia.stitchworks.database.Skein
-import android.jia.stitchworks.database.SkeinDatabase
+import android.jia.stitchworks.data.Skein
+import android.jia.stitchworks.data.AppDatabase
 import android.util.Log
 import androidx.work.WorkerParameters
 import kotlinx.coroutines.Dispatchers
@@ -27,8 +27,8 @@ class SeedDatabaseWorker(
                             val skeinType = object : TypeToken<List<Skein>>() {}.type
                             val skeinList: List<Skein> = Gson().fromJson(jsonReader, skeinType)
 
-                            val database = SkeinDatabase.getInstance(applicationContext)
-                            database.skeinDatabaseDao.insertAll(skeinList)
+                            val database = AppDatabase.getInstance(applicationContext)
+                            database.skeinDao.insertAll(skeinList)
 
                             Result.success()
                         }
@@ -44,7 +44,7 @@ class SeedDatabaseWorker(
         }
 
         companion object {
-            private const val TAG = "SeedDatabaseWorker"
+            private const val TAG = "SkeinDatabaseWorker"
             const val KEY_FILENAME = "SKEIN_DATA_FILENAME"
         }
     }

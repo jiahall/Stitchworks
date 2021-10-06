@@ -1,18 +1,16 @@
 package android.jia.stitchworks.skeinchecker
 
-import android.app.Application
-import android.jia.stitchworks.database.Skein
-import android.jia.stitchworks.database.SkeinDatabaseDao
+import android.jia.stitchworks.data.Skein
+import android.jia.stitchworks.data.SkeinDao
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flatMapLatest
 import javax.inject.Inject
 
 @HiltViewModel
-class SkeinCheckerViewModel @Inject internal constructor(private val dataSource: SkeinDatabaseDao) :
+class SkeinCheckerViewModel @Inject internal constructor(private val dataSource: SkeinDao) :
     ViewModel() {
 
 

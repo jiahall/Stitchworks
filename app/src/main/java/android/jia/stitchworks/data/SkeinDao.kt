@@ -1,4 +1,4 @@
-package android.jia.stitchworks.database
+package android.jia.stitchworks.data
 
 
 import android.jia.stitchworks.skeinadder.FilterSkeinOption
@@ -7,7 +7,7 @@ import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface SkeinDatabaseDao {
+interface SkeinDao {
 
     fun getSkeins(query: String, filterSkein: FilterSkein): Flow<List<Skein>> =
         when (filterSkein) {

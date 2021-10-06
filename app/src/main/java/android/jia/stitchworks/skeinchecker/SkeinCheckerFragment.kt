@@ -80,16 +80,10 @@ class SkeinCheckerFragment : Fragment() {
 
         binding.searchView.queryHint = "hello, type here"
 
-
-
-
-
-
         binding.searchView.onQueryTextChanged {
             skeinCheckerViewModel.searchQuery.value = it
 
         }
-
 
         //it refers to the view jia
         binding.searchFilter.setOnClickListener{openMenu(it)

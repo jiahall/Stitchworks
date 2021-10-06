@@ -1,13 +1,9 @@
 package android.jia.stitchworks.skeinadder
 
-import android.app.PendingIntent.getActivity
-import android.jia.stitchworks.database.Skein
-import android.jia.stitchworks.database.SkeinDatabaseDao
-import android.util.Log
-import android.widget.Toast
+import android.jia.stitchworks.data.Skein
+import android.jia.stitchworks.data.SkeinDao
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
@@ -18,7 +14,7 @@ const val SINGLE_THREAD = "NONE"
 
 @HiltViewModel
 class SkeinAdderViewModel @Inject internal constructor(
-    private val dataSource: SkeinDatabaseDao
+    private val dataSource: SkeinDao
 ) : ViewModel() {
 
 

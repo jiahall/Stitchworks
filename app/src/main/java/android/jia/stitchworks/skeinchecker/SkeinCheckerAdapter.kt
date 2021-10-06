@@ -1,7 +1,7 @@
 package android.jia.stitchworks.skeinchecker
 
 import android.graphics.Color
-import android.jia.stitchworks.database.Skein
+import android.jia.stitchworks.data.Skein
 import android.jia.stitchworks.databinding.ListItemSkeinBinding
 import android.util.Log
 import android.view.LayoutInflater

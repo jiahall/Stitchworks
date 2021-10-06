@@ -1,7 +1,6 @@
-package android.jia.stitchworks.database
+package android.jia.stitchworks.data
 
 import android.content.Context
-import android.content.res.Resources
 import android.jia.stitchworks.SKEIN_DATA_FILENAME
 import android.jia.stitchworks.SeedDatabaseWorker
 import android.jia.stitchworks.SeedDatabaseWorker.Companion.KEY_FILENAME
@@ -14,25 +13,25 @@ import androidx.work.WorkManager
 import androidx.work.workDataOf
 
 @Database(entities = [Skein::class], version = 1, exportSchema = true)
-abstract class SkeinDatabase: RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
 
-    abstract val skeinDatabaseDao: SkeinDatabaseDao
+    abstract val skeinDao: SkeinDao
 
-    companion object{
+    companion object {
 
         @Volatile
-        private var INSTANCE: SkeinDatabase? = null
+        private var INSTANCE: AppDatabase? = null
 
-        fun getInstance(context: Context): SkeinDatabase{
-            synchronized(this){
+        fun getInstance(context: Context): AppDatabase {
+            synchronized(this) {
                 var instance = INSTANCE
 
-                if (instance == null){
+                if (instance == null) {
                     instance = Room.databaseBuilder(
                         context.applicationContext,
-                        SkeinDatabase::class.java,
+                        AppDatabase::class.java,
                         "skein_history_database"
-                    ).addCallback(object : RoomDatabase.Callback(){
+                    ).addCallback(object : RoomDatabase.Callback() {
                         override fun onCreate(db: SupportSQLiteDatabase) {
                             super.onCreate(db)
                             val request = OneTimeWorkRequestBuilder<SeedDatabaseWorker>()

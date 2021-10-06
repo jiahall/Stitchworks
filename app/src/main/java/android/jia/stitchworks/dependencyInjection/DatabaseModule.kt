@@ -1,8 +1,8 @@
 package android.jia.stitchworks.dependencyInjection
 
 import android.content.Context
-import android.jia.stitchworks.database.SkeinDatabase
-import android.jia.stitchworks.database.SkeinDatabaseDao
+import android.jia.stitchworks.data.AppDatabase
+import android.jia.stitchworks.data.SkeinDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,12 +16,12 @@ class DatabaseModule {
 
     @Singleton
     @Provides
-    fun provideSkeinDatabase(@ApplicationContext context: Context): SkeinDatabase {
-        return SkeinDatabase.getInstance(context)
+    fun provideSkeinDatabase(@ApplicationContext context: Context): AppDatabase {
+        return AppDatabase.getInstance(context)
     }
 
     @Provides
-    fun provideSkeinDao(skeinDatabase: SkeinDatabase): SkeinDatabaseDao {
-        return skeinDatabase.skeinDatabaseDao
+    fun provideSkeinDao(appDatabase: AppDatabase): SkeinDao {
+        return appDatabase.skeinDao
     }
 }

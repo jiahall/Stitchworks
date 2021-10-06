@@ -1,4 +1,4 @@
-package android.jia.stitchworks.database
+package android.jia.stitchworks.data
 
 import android.net.Uri
 import androidx.room.PrimaryKey

@@ -1,29 +1,20 @@
 package android.jia.stitchworks.skeinadder
 
 
-import android.jia.stitchworks.MainActivity
 import android.jia.stitchworks.R
-import android.jia.stitchworks.database.Skein
-import android.jia.stitchworks.database.SkeinDatabase
+import android.jia.stitchworks.data.Skein
 import android.jia.stitchworks.databinding.FragmentSkeinAdderBinding
 import android.jia.stitchworks.onQueryTextChanged
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SearchView
 import android.widget.Toast
 import androidx.core.view.isGone
-import androidx.core.view.isVisible
-import androidx.core.view.size
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,7 +40,7 @@ class SkeinAdderFragment : Fragment() {
 
 
         //val application = requireNotNull(this.activity).application
-        // val dataSource = SkeinDatabase.getInstance(application).skeinDatabaseDao
+        // val dataSource = AppDatabase.getInstance(application).skeinDao
         //val viewModelFactory = SkeinAdderViewModelFactory(dataSource)
 
         // skeinAdderViewModel =

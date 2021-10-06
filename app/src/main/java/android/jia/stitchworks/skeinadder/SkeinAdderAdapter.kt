@@ -1,7 +1,7 @@
 package android.jia.stitchworks.skeinadder
 
 import android.graphics.Color
-import android.jia.stitchworks.database.Skein
+import android.jia.stitchworks.data.Skein
 import android.jia.stitchworks.databinding.ListItemSmallSkeinBinding
 import android.util.Log
 import android.view.LayoutInflater

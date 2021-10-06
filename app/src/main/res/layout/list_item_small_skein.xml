@@ -7,7 +7,7 @@
 
         <variable
             name="skein"
-            type="android.jia.stitchworks.database.Skein" />
+            type="android.jia.stitchworks.data.Skein" />
 
         <variable
             name="clickListener"

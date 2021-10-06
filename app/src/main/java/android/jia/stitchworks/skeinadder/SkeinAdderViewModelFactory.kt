@@ -1,12 +1,11 @@
 package android.jia.stitchworks.skeinadder
 
-import android.jia.stitchworks.database.SkeinDatabaseDao
-import android.jia.stitchworks.skeinchecker.SkeinCheckerViewModel
+import android.jia.stitchworks.data.SkeinDao
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
 class SkeinAdderViewModelFactory(
-    private val dataSource: SkeinDatabaseDao
+    private val dataSource: SkeinDao
 
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
