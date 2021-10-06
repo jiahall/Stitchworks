@@ -33,38 +33,19 @@ interface SkeinDatabaseDao {
     @Query("SELECT * FROM skein_checklist WHERE amount >= 1 AND (brandNumber LIKE '%' || :searchQuery || '%' OR thread_name LIKE '%' || :searchQuery || '%') ORDER BY skein_number ASC")
     fun getOwned(searchQuery: String): Flow<List<Skein>>
 
-    @Query("SELECT * FROM skein_checklist WHERE amount >= 1  ORDER BY skein_number ASC")
-    fun getOwned2(): Flow<List<Skein>>
-
     @Query("SELECT * FROM skein_checklist WHERE amount= 0 AND (brandNumber LIKE '%' || :searchQuery || '%' OR thread_name LIKE '%' || :searchQuery || '%') ORDER BY skein_number ASC")
     fun getUnowned(searchQuery: String): Flow<List<Skein>>
 
-    @Query("SELECT * FROM skein_checklist WHERE amount= 0 ORDER BY skein_number ASC")
-    fun getUnowned2(): Flow<List<Skein>>
-
-    @Insert
-    suspend fun insert(skein: Skein)
+    //we'll delete this when we have the other filter options set up
+    @Query("SELECT * FROM skein_checklist WHERE amount >= 1  ORDER BY skein_number ASC")
+    fun getOwned2(): Flow<List<Skein>>
 
     @Insert
     suspend fun insertAll(skein: List<Skein>)
 
+    //youll need this for the skeinDetail page
     @Query("SELECT * FROM skein_checklist WHERE brandNumber = :key")
     suspend fun get(key: String): Skein
-
-    @Query("SELECT * FROM skein_checklist ORDER BY skein_number ASC")
-    suspend fun getAllThreads(): List<Skein>
-
-    @Query("SELECT * FROM skein_checklist WHERE amount = 0 ORDER BY skein_number ASC")
-    suspend fun getUnowned(): List<Skein>
-
-    @Query("DELETE FROM skein_checklist Where brandNumber = :key")
-    suspend fun delete(key: String)
-
-    @Query("DELETE  FROM skein_checklist")
-    suspend fun deleteAll()
-
-    @Query("SELECT * FROM skein_checklist WHERE brandNumber LIKE :searchQuery OR thread_name LIKE :searchQuery ORDER BY skein_number ASC")
-    fun searchDatabase(searchQuery: String): Flow<List<Skein>>
 
     @Query("UPDATE skein_checklist SET amount = 1 WHERE brandNumber = :brandNumber")
     suspend fun addThread(brandNumber: String)
@@ -77,6 +58,5 @@ interface SkeinDatabaseDao {
 
     @Query("UPDATE skein_checklist SET amount = 0 WHERE skein_number BETWEEN :skeinNumber AND :skeinNumber1")
     suspend fun removeThreadRange(skeinNumber: Int, skeinNumber1: Int)
-
 
 }
