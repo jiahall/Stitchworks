@@ -1,0 +1,3 @@
+package android.jia.stitchworks.skeindetail
+
+class SkeinDetailViewModel

@@ -24,7 +24,6 @@ class SkeinCheckerViewModel @Inject internal constructor(private val dataSource:
     // Internally we use mutablelive data to update the list with live values
     private val _threads = skeinFlow
 
-
     //the external livedata threads is immutable, this is because we don't want it to be edited outside of the view model
     val threads: LiveData<List<Skein>>
         //overrid the get function to return the list in _thread

@@ -29,6 +29,10 @@ android {
         }
     }
 
+    testOptions.unitTests {
+        includeAndroidResources = true
+    }
+
     buildTypes {
         release {
             minifyEnabled false

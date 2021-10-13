@@ -5,6 +5,10 @@
       <map>
         <entry key="..\:/programming/projects/Stitchworks/app/src/main/res/layout/fragment_skein_adder.xml" value="0.1828125" />
         <entry key="..\:/programming/projects/Stitchworks/app/src/main/res/layout/fragment_skein_checker.xml" value="0.1828125" />
+        <entry key="..\:/programming/projects/Stitchworks/app/src/main/res/layout/fragment_skein_detail.xml" value="0.36666666666666664" />
+        <entry key="..\:/programming/projects/Stitchworks/app/src/main/res/layout/list_item_skein.xml" value="0.26358695652173914" />
+        <entry key="..\:/programming/projects/Stitchworks/app/src/main/res/layout/list_item_small_skein.xml" value="0.264945652173913" />
+        <entry key="..\:/programming/projects/Stitchworks/app/src/main/res/layout/skein_item.xml" value="0.26358695652173914" />
       </map>
     </option>
   </component>
